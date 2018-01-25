@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "start": "parcel index.html",
-    "bundle": "parcel build index.html"
+    "bundle": "parcel build -d doc index.html"
   },
   "devDependencies": {
     "babel-preset-env": "^1.6.1",
