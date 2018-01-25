@@ -20,7 +20,7 @@ export default class Canvas extends React.Component {
       return;
     }
 
-    this.props.onSvgContentChange(svgElement.innerHTML);
+    this.props.onSvgContentChange(svgElement.outerHTML);
   }
 
   handleMouseDown(e) {
@@ -66,6 +66,7 @@ export default class Canvas extends React.Component {
   render() {
     return (
       <svg
+        xmlns="http://www.w3.org/2000/svg"
         ref={this.getSvgContent.bind(this)}
         onMouseMove={this.handleMouseMove.bind(this)}
         onMouseUp={this.handleMouseDrop.bind(this)}

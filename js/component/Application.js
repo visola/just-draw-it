@@ -33,8 +33,7 @@ export default class Application extends React.Component {
     this.setState({ rects: this.state.rects });
   }
 
-  handleSvgContentChanged(svgContent) {
-    const svg = `<svg>${svgContent}</svg>`;
+  handleSvgContentChanged(svg) {
     if (this.state.svg == svg) {
       return;
     }
