@@ -1,36 +1,37 @@
+import { observer } from 'mobx-react';
 import React from 'react';
 
 import Canvas from './Canvas';
+import Drawables from '../stores/Drawables';
+import Rectangle from '../models/Rectangle';
 
 const SVG_MIME_TYPE = 'image/svg+xml';
 
+@observer
 export default class Application extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      rects: [],
+      drawables: new Drawables(),
       svg: null,
     };
   }
 
   handleAddRect() {
-    const rects = this.state.rects;
-    const index = rects.length + 1;
-    rects.push({
-      height: 100,
-      id: Date.now(),
-      width: 100,
-      x: index * 10,
-      y: index * 10,
-    });
-    this.setState({ rects });
+    const drawables = this.state.drawables;
+    const index = drawables.length + 1;
+    const rect = new Rectangle();
+    rect.x = index * 10;
+    rect.y = index * 10
+    rect.height = 100;
+    rect.width = 100;
+    drawables.push(rect);
   }
 
-  handleRectDrop(rect, {x, y}) {
-    const loadedRect = this.state.rects.find((r) => r.id == rect.id);
+  handleDropDrawable(rect, {x, y}) {
+    const loadedRect = this.state.drawables.find(rect.id);
     loadedRect.x = x;
     loadedRect.y = y;
-    this.setState({ rects: this.state.rects });
   }
 
   handleSvgContentChanged(svg) {
@@ -46,9 +47,9 @@ export default class Application extends React.Component {
         <button onClick={this.handleAddRect.bind(this)}>Add Rect</button>
         {this.renderDownloadLink()}
         <Canvas
-          onRectDrop={this.handleRectDrop.bind(this)}
+          onDrop={this.handleDropDrawable.bind(this)}
           onSvgContentChange={this.handleSvgContentChanged.bind(this)}
-          rects={this.state.rects} />
+          drawables={this.state.drawables} />
       </div>
     );
   }

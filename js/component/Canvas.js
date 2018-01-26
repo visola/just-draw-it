@@ -1,11 +1,16 @@
+import { observer } from 'mobx-react';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import Rect from './Rect';
+import Rectangle from '../models/Rectangle';
+
+@observer
 export default class Canvas extends React.Component {
   static propTypes = {
-    onRectDrop: PropTypes.func.isRequired,
+    onDrop: PropTypes.func.isRequired,
     onSvgContentChange: PropTypes.func.isRequired,
-    rects: PropTypes.array.isRequired,
+    drawables: PropTypes.object.isRequired,
   }
 
   constructor(props) {
@@ -28,12 +33,15 @@ export default class Canvas extends React.Component {
       return;
     }
 
+    const drawable = this.props.drawables.find(e.target.dataset.id);
     this.setState({
-      dragging: e.target.dataset.id,
+      dragging: drawable.id,
       initialX: e.clientX,
       initialY: e.clientY,
-      offsetX: e.clientX,
-      offsetY: e.clientY,
+      initialPosX: drawable.x,
+      initialPosY: drawable.y,
+      offsetX: drawable.x,
+      offsetY: drawable.y,
     });
   }
 
@@ -43,8 +51,8 @@ export default class Canvas extends React.Component {
     }
 
     this.setState({
-      offsetX: e.clientX,
-      offsetY: e.clientY,
+      offsetX: this.state.initialPosX + e.clientX - this.state.initialX,
+      offsetY: this.state.initialPosY + e.clientY - this.state.initialY,
     })
   }
 
@@ -53,11 +61,10 @@ export default class Canvas extends React.Component {
       return;
     }
 
-    const rect = this.props.rects.find((r) => r.id == this.state.dragging);
-    const { x, y } = rect;
-    this.props.onRectDrop(rect, {
-      x: rect.x + this.state.offsetX - this.state.initialX,
-      y: rect.y + this.state.offsetY - this.state.initialY,
+    const rect = this.props.drawables.find(this.state.dragging);
+    this.props.onDrop(rect, {
+      x: this.state.offsetX,
+      y: this.state.offsetY,
     });
 
     this.setState({ dragging: null });
@@ -74,36 +81,31 @@ export default class Canvas extends React.Component {
         width="500"
         height="500"
       >
-        {this.renderRects()}
+        {this.renderDrawables()}
       </svg>
     );
   }
 
-  renderRects() {
-    return this.props.rects.map((rect) => {
-      const { id } = rect;
-      let { x, y } = rect;
-      const dragging = this.state.dragging == id;
+  renderDrawables() {
+    return this.props.drawables.map((drawable) => {
+      let offsetX;
+      let offsetY;
+      const dragging = drawable.id == this.state.dragging;
 
       if (dragging) {
-        x = x + this.state.offsetX - this.state.initialX;
-        y = y + this.state.offsetY - this.state.initialY;
+        ({ offsetX, offsetY } = this.state);
       }
 
-      if (isNaN(x) || isNaN(y)) {
-        return null;
+      switch(drawable.type) {
+        case "Rectangle":
+          return <Rect
+            key={drawable.id}
+            offsetX={offsetX}
+            offsetY={offsetY}
+            onMouseDown={this.handleMouseDown.bind(this)}
+            rect={drawable}
+          />
       }
-
-      return <rect
-        className={dragging ? 'dragging' : ''}
-        data-id={rect.id}
-        key={rect.id}
-        onMouseDown={this.handleMouseDown.bind(this)}
-        height={rect.height}
-        width={rect.width}
-        x={x}
-        y={y}
-      />
     });
   }
 }
