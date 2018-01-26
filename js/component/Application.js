@@ -43,9 +43,11 @@ export default class Application extends React.Component {
 
   render() {
     return (
-      <div className="toolbar">
-        <button onClick={this.handleAddRect.bind(this)}>Add Rect</button>
-        {this.renderDownloadLink()}
+      <div>
+        <div className="toolbar">
+          <button onClick={this.handleAddRect.bind(this)}>Add Rect</button>
+          {this.renderDownloadLink()}
+        </div>
         <Canvas
           onDrop={this.handleDropDrawable.bind(this)}
           onSvgContentChange={this.handleSvgContentChanged.bind(this)}
