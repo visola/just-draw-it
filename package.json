@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "start": "parcel index.html",
-    "publish": "parcel build -d docs index.html"
+    "bundle": "parcel build -d docs index.html"
   },
   "devDependencies": {
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
