@@ -45,7 +45,9 @@ export default class Application extends React.Component {
     return (
       <div>
         <div className="toolbar">
-          <button onClick={this.handleAddRect.bind(this)}>Add Rect</button>
+          <button className="btn btn-default" onClick={this.handleAddRect.bind(this)}>
+            <span className="glyphicon glyphicon-stop"></span>
+          </button>
           {this.renderDownloadLink()}
         </div>
         <Canvas
@@ -62,6 +64,12 @@ export default class Application extends React.Component {
     }
 
     const bb = new Blob([this.state.svg], {type: SVG_MIME_TYPE});
-    return <a download="drawing.svg" href={window.URL.createObjectURL(bb)}>Download</a>;
+    return <a
+      className="btn btn-default"
+      download="drawing.svg"
+      href={window.URL.createObjectURL(bb)}
+    >
+      <span className="glyphicon glyphicon-download-alt"></span>
+    </a>;
   }
 }
