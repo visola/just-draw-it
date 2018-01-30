@@ -10,13 +10,24 @@ export default class ControlPoint extends React.Component {
     y: PropTypes.number.isRequired,
   }
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      dragging: false,
+      initialX: null,
+      initialY: null,
+      offsetX: 0,
+      offsetY: 0,
+    };
+  }
+
   render() {
     return <rect
       fill="#e4e400"
       height={SIZE}
       width={SIZE}
-      x={this.props.x - HALF_SIZE}
-      y={this.props.y - HALF_SIZE}
+      x={this.props.x + this.state.offsetX - HALF_SIZE}
+      y={this.props.y + this.state.offsetY - HALF_SIZE}
     />;
   }
 }

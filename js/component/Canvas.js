@@ -2,8 +2,10 @@ import { observer } from 'mobx-react';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import ControlPoint from './ControlPoint';
 import Rect from './Rect';
 import Rectangle from '../models/Rectangle';
+import SelectionBox from './SelectionBox';
 
 @observer
 export default class Canvas extends React.Component {
@@ -22,6 +24,20 @@ export default class Canvas extends React.Component {
     }
   }
 
+  getCoords(drawable) {
+    if (this.state.dragging && this.state.dragging.id == drawable.id) {
+      return {
+        x: this.state.offsetX,
+        y: this.state.offsetY,
+      };
+    }
+
+    return {
+      x: drawable.x,
+      y: drawable.y,
+    };
+  }
+
   getSvgContent(svgElement) {
     if (svgElement == null) {
       return;
@@ -38,7 +54,7 @@ export default class Canvas extends React.Component {
     const drawable = this.props.drawables.find(e.target.dataset.id);
     this.setState({
       mouseDownAt: Date.now(),
-      dragging: drawable.id,
+      dragging: drawable,
       initialX: e.clientX,
       initialY: e.clientY,
       initialPosX: drawable.x,
@@ -80,7 +96,7 @@ export default class Canvas extends React.Component {
       return;
     }
 
-    const rect = this.props.drawables.find(this.state.dragging);
+    const rect = this.state.dragging;
     this.props.onDrop(rect, {
       x: this.state.offsetX,
       y: this.state.offsetY,
@@ -118,6 +134,7 @@ export default class Canvas extends React.Component {
         height="500"
       >
         {this.renderDrawables()}
+        {this.renderSelectionBoxWithControls()}
       </svg>
     );
   }
@@ -125,26 +142,36 @@ export default class Canvas extends React.Component {
   renderDrawables() {
     return this.props.drawables.map((drawable) => {
       const { id } = drawable;
-      let offsetX;
-      let offsetY;
-      const dragging = id == this.state.dragging;
-      const selected = id == this.state.selected;
-
-      if (dragging) {
-        ({ offsetX, offsetY } = this.state);
-      }
+      const { x, y } = this.getCoords(drawable);
 
       switch(drawable.type) {
         case "Rectangle":
-          return <Rect
-            key={drawable.id}
-            offsetX={offsetX}
-            offsetY={offsetY}
+          return <Rect key={drawable.id} x={x} y={y} rect={drawable}
             onMouseDown={this.handleDrawableMouseDown.bind(this)}
-            rect={drawable}
-            selected={selected}
           />
       }
     });
+  }
+
+  renderSelectionBoxWithControls() {
+    if (this.state.selected) {
+      const { height, width } = this.state.selected;
+      const { x, y } = this.getCoords(this.state.selected);
+      const halfHeight = height / 2;
+      const halfWidth = width / 2;
+      return <g transform={`translate(${x},${y})`}>
+        <SelectionBox height={height} width={width} />
+        <ControlPoint x={0} y={0} /> {/* top left */}
+        <ControlPoint x={halfWidth} y={0} /> {/* top middle */}
+        <ControlPoint x={width} y={0} /> {/* top right */}
+        <ControlPoint x={width} y={height / 2} /> {/* middle right */}
+        <ControlPoint x={width} y={height} /> {/* bottom right */}
+        <ControlPoint x={halfWidth} y={height} /> {/* bottom middle */}
+        <ControlPoint x={0} y={height} /> {/* bottom left */}
+        <ControlPoint x={0} y={halfHeight} /> {/* middle left */}
+      </g>;
+    }
+
+    return null;
   }
 }
