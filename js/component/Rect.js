@@ -5,17 +5,19 @@ export default class Rect extends React.Component {
   static propTypes = {
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
-    onMouseDown: PropTypes.func.isRequired,
     rect: PropTypes.object.isRequired,
   }
 
   render() {
-    const { height, id, width } = this.props.rect;
+    const { fill, height, id, stroke, width } = this.props.rect;
     const { x, y } = this.props;
 
     return <rect
+      fill={fill}
+      stroke={stroke}
       data-id={id}
-      onMouseDown={this.props.onMouseDown}
+      data-drawable="true"
+      data-type="rect"
       height={height}
       width={width}
       x={x}

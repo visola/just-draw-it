@@ -10,6 +10,7 @@ import SelectionBox from './SelectionBox';
 @observer
 export default class Canvas extends React.Component {
   static propTypes = {
+    onDrawableSelected: PropTypes.func.isRequired,
     onDrop: PropTypes.func.isRequired,
     onSvgContentChange: PropTypes.func.isRequired,
     drawables: PropTypes.object.isRequired,
@@ -38,6 +39,22 @@ export default class Canvas extends React.Component {
     };
   }
 
+  getElementClicked(x, y) {
+    const elements = document.elementsFromPoint(x, y);
+    let result = null;
+    elements.reverse().forEach((e) => {
+      const isDrawable = e.dataset.drawable === "true";
+      const isControl = e.dataset.control === "true";
+      if (isDrawable) {
+        result = { drawable: true, element: e };
+      }
+      if (isControl) {
+        result = { control: true, element: e };
+      }
+    });
+    return result;
+  }
+
   getSvgContent(svgElement) {
     if (svgElement == null) {
       return;
@@ -46,12 +63,12 @@ export default class Canvas extends React.Component {
     this.props.onSvgContentChange(svgElement.outerHTML);
   }
 
-  handleDrawableMouseDown(e) {
+  handleDrawableMouseDown(e, drawableId) {
     if (this.state.dragging != null) {
       return;
     }
 
-    const drawable = this.props.drawables.find(e.target.dataset.id);
+    const drawable = this.props.drawables.find(drawableId);
     this.setState({
       mouseDownAt: Date.now(),
       dragging: drawable,
@@ -69,6 +86,7 @@ export default class Canvas extends React.Component {
       return;
     }
 
+    this.triggerOnDrawableSelected(this.state.dragging);
     this.setState({
       offsetX: this.state.initialPosX + e.clientX - this.state.initialX,
       offsetY: this.state.initialPosY + e.clientY - this.state.initialY,
@@ -81,6 +99,7 @@ export default class Canvas extends React.Component {
 
     // User clicked fast
     if (clickTime <= 250) {
+      this.triggerOnDrawableSelected(this.state.dragging);
       this.setState({
         dragging: null,
         mouseDownAt: null,
@@ -109,16 +128,18 @@ export default class Canvas extends React.Component {
   }
 
   handleSVGMouseDown(e) {
-    if (e.target.tagName !== 'svg') {
-      return;
+    const clickedResult = this.getElementClicked(e.clientX, e.clientY);
+    if (clickedResult !== null && clickedResult.drawable === true) {
+      this.handleDrawableMouseDown(e, clickedResult.element.dataset.id);
+    } else {
+      // clicked outside everything
+      this.setState({
+        mouseDownAt: Date.now(),
+        dragging: null,
+        initialX: e.clientX,
+        initialY: e.clientY,
+      });
     }
-
-    this.setState({
-      mouseDownAt: Date.now(),
-      dragging: null,
-      initialX: e.clientX,
-      initialY: e.clientY,
-    });
   }
 
   render() {
@@ -146,9 +167,7 @@ export default class Canvas extends React.Component {
 
       switch(drawable.type) {
         case "Rectangle":
-          return <Rect key={drawable.id} x={x} y={y} rect={drawable}
-            onMouseDown={this.handleDrawableMouseDown.bind(this)}
-          />
+          return <Rect key={drawable.id} x={x} y={y} rect={drawable} />
       }
     });
   }
@@ -173,5 +192,11 @@ export default class Canvas extends React.Component {
     }
 
     return null;
+  }
+
+  triggerOnDrawableSelected(drawable) {
+    if (drawable !== this.state.selected) {
+      this.props.onDrawableSelected(drawable);
+    }
   }
 }
