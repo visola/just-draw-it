@@ -4,7 +4,6 @@ import React from 'react';
 
 import ControlPoint from './ControlPoint';
 import Rect from './Rect';
-import Rectangle from '../models/Rectangle';
 import SelectionBox from './SelectionBox';
 
 @observer
@@ -22,11 +21,11 @@ export default class Canvas extends React.Component {
       mouseDownAt: null,
       dragging: null,
       selected: null,
-    }
+    };
   }
 
   getCoords(drawable) {
-    if (this.state.dragging && this.state.dragging.id == drawable.id) {
+    if (this.state.dragging && this.state.dragging.id === drawable.id) {
       return {
         x: this.state.offsetX,
         y: this.state.offsetY,
@@ -43,8 +42,8 @@ export default class Canvas extends React.Component {
     const elements = document.elementsFromPoint(x, y);
     let result = null;
     elements.reverse().forEach((e) => {
-      const isDrawable = e.dataset.drawable === "true";
-      const isControl = e.dataset.control === "true";
+      const isDrawable = e.dataset.drawable === 'true';
+      const isControl = e.dataset.control === 'true';
       if (isDrawable) {
         result = { drawable: true, element: e };
       }
@@ -88,10 +87,10 @@ export default class Canvas extends React.Component {
 
     this.triggerOnDrawableSelected(this.state.dragging);
     this.setState({
-      offsetX: this.state.initialPosX + e.clientX - this.state.initialX,
-      offsetY: this.state.initialPosY + e.clientY - this.state.initialY,
+      offsetX: this.state.initialPosX + (e.clientX - this.state.initialX),
+      offsetY: this.state.initialPosY + (e.clientY - this.state.initialY),
       selected: this.state.dragging,
-    })
+    });
   }
 
   handleMouseUp(e) {
@@ -104,13 +103,13 @@ export default class Canvas extends React.Component {
         dragging: null,
         mouseDownAt: null,
         selected: this.state.dragging,
-      })
+      });
     } else {
       this.handleMouseDrop(e);
     }
   }
 
-  handleMouseDrop(e) {
+  handleMouseDrop() {
     if (this.state.dragging == null) {
       return;
     }
@@ -163,12 +162,13 @@ export default class Canvas extends React.Component {
 
   renderDrawables() {
     return this.props.drawables.map((drawable) => {
-      const { id } = drawable;
       const { x, y } = this.getCoords(drawable);
 
-      switch(drawable.type) {
-        case "Rectangle":
-          return <Rect key={drawable.id} x={x} y={y} rect={drawable} />
+      switch (drawable.type) {
+        case 'Rectangle':
+          return <Rect key={drawable.id} x={x} y={y} rect={drawable} />;
+        default:
+          return null;
       }
     });
   }

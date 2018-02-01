@@ -9,7 +9,9 @@ export default class Rect extends React.Component {
   }
 
   render() {
-    const { fill, height, id, stroke, strokeWidth, width } = this.props.rect;
+    const {
+      fill, height, id, stroke, strokeWidth, width,
+    } = this.props.rect;
     const { x, y } = this.props;
 
     return <rect
@@ -23,6 +25,6 @@ export default class Rect extends React.Component {
       width={width}
       x={x}
       y={y}
-    />
+    />;
   }
 }

@@ -4,11 +4,12 @@ export default class Drawables {
   @observable collection = [];
 
   find(id) {
-    return this.collection.find((d) => d.id == id);
+    const intId = parseInt(id, 10);
+    return this.collection.find((d) => d.id === intId);
   }
 
   @computed
-  get length () {
+  get length() {
     return this.collection.length;
   }
 
@@ -20,5 +21,4 @@ export default class Drawables {
   push(drawable) {
     this.collection.push(drawable);
   }
-
 }
