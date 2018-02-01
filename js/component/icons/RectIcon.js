@@ -12,6 +12,6 @@ export default class RectIcon extends React.Component {
         strokeWidth="2"
         fill="none"
       />
-    </svg>
+    </svg>;
   }
 }

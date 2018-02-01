@@ -27,8 +27,8 @@ export default class ControlPoint extends React.Component {
       fill="#e4e400"
       height={SIZE}
       width={SIZE}
-      x={this.props.x + this.state.offsetX - HALF_SIZE}
-      y={this.props.y + this.state.offsetY - HALF_SIZE}
+      x={this.props.x + (this.state.offsetX - HALF_SIZE)}
+      y={this.props.y + (this.state.offsetY - HALF_SIZE)}
     />;
   }
 }

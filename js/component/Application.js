@@ -22,11 +22,11 @@ export default class Application extends React.Component {
   }
 
   handleAddRect() {
-    const drawables = this.state.drawables;
+    const { drawables } = this.state;
     const index = drawables.length + 1;
     const rect = new Rectangle();
     rect.x = index * 10;
-    rect.y = index * 10
+    rect.y = index * 10;
     rect.height = 100;
     rect.width = 100;
     drawables.push(rect);
@@ -34,14 +34,14 @@ export default class Application extends React.Component {
 
   handleChangeStrokeWidth() {
     const { selected } = this.state;
-    const result = prompt("What stroke width?", selected.strokeWidth);
+    const result = prompt('What stroke width?', selected.strokeWidth);
     if (result && result > 0) {
       selected.strokeWidth = result;
       this.setState({ selected });
     }
   }
 
-  handleDropDrawable(rect, {x, y}) {
+  handleDropDrawable(rect, { x, y }) {
     const loadedRect = this.state.drawables.find(rect.id);
     loadedRect.x = x;
     loadedRect.y = y;
@@ -60,7 +60,7 @@ export default class Application extends React.Component {
   }
 
   handleSvgContentChanged(svg) {
-    if (this.state.svg == svg) {
+    if (this.state.svg === svg) {
       return;
     }
     this.setState({ svg });
@@ -90,7 +90,7 @@ export default class Application extends React.Component {
       return null;
     }
 
-    const bb = new Blob([this.state.svg], {type: SVG_MIME_TYPE});
+    const bb = new Blob([this.state.svg], { type: SVG_MIME_TYPE });
     return <a
       className="btn btn-default"
       download="drawing.svg"
