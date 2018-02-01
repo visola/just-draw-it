@@ -1,0 +1,28 @@
+@import "./color-picker";
+
+.dragging {
+  stroke: rgb(229, 229, 175);
+  stroke-width: 1;
+}
+
+svg.canvas {
+  border: 1px solid #ccc;
+  box-shadow: 10px 10px 10px #ddd;
+  margin: 10px;
+}
+
+svg.icon {
+  height: 20px;
+  width: 20px;
+}
+
+.toolbar {
+  display: flex;
+  flex-direction: column;
+  float: left;
+  margin-top: 5px;
+
+  > * {
+    margin: 5px;
+  }
+}

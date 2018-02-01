@@ -23,6 +23,7 @@ export default class ControlPoint extends React.Component {
 
   render() {
     return <rect
+      data-control="true"
       fill="#e4e400"
       height={SIZE}
       width={SIZE}

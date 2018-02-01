@@ -2,8 +2,11 @@ import { observer } from 'mobx-react';
 import React from 'react';
 
 import Canvas from './Canvas';
+import ColorPicker from './ColorPicker';
 import Drawables from '../stores/Drawables';
 import Rectangle from '../models/Rectangle';
+import RectIcon from './icons/RectIcon';
+import StrokeWidthIcon from './icons/StrokeWidthIcon';
 
 const SVG_MIME_TYPE = 'image/svg+xml';
 
@@ -13,6 +16,7 @@ export default class Application extends React.Component {
     super(props);
     this.state = {
       drawables: new Drawables(),
+      selected: null,
       svg: null,
     };
   }
@@ -28,10 +32,31 @@ export default class Application extends React.Component {
     drawables.push(rect);
   }
 
+  handleChangeStrokeWidth() {
+    const { selected } = this.state;
+    const result = prompt("What stroke width?", selected.strokeWidth);
+    if (result && result > 0) {
+      selected.strokeWidth = result;
+      this.setState({ selected });
+    }
+  }
+
   handleDropDrawable(rect, {x, y}) {
     const loadedRect = this.state.drawables.find(rect.id);
     loadedRect.x = x;
     loadedRect.y = y;
+  }
+
+  handleDrawableSelected(drawable) {
+    this.setState({ selected: drawable });
+  }
+
+  handleFillColorChange(newColor) {
+    this.state.selected.fill = newColor;
+  }
+
+  handleStrokeColorChange(newColor) {
+    this.state.selected.stroke = newColor;
   }
 
   handleSvgContentChanged(svg) {
@@ -46,11 +71,13 @@ export default class Application extends React.Component {
       <div>
         <div className="toolbar">
           <button className="btn btn-default" onClick={this.handleAddRect.bind(this)}>
-            <span className="glyphicon glyphicon-stop"></span>
+            <RectIcon />
           </button>
           {this.renderDownloadLink()}
+          {this.renderControlsForSelected()}
         </div>
         <Canvas
+          onDrawableSelected={this.handleDrawableSelected.bind(this)}
           onDrop={this.handleDropDrawable.bind(this)}
           onSvgContentChange={this.handleSvgContentChanged.bind(this)}
           drawables={this.state.drawables} />
@@ -71,5 +98,20 @@ export default class Application extends React.Component {
     >
       <span className="glyphicon glyphicon-download-alt"></span>
     </a>;
+  }
+
+  renderControlsForSelected() {
+    const { selected } = this.state;
+    if (!selected) {
+      return null;
+    }
+
+    return [
+      <ColorPicker key="fill" color={selected.fill} onColorChange={this.handleFillColorChange.bind(this)} />,
+      <ColorPicker key="stroke" color={selected.stroke} onColorChange={this.handleStrokeColorChange.bind(this)} />,
+      <button key="strokeWidth" className="btn btn-default" onClick={this.handleChangeStrokeWidth.bind(this)}>
+        <StrokeWidthIcon />
+      </button>,
+    ];
   }
 }
