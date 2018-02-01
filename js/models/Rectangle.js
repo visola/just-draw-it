@@ -9,4 +9,5 @@ export default class Rectangle {
   @observable y;
   @observable fill = '#cccccc';
   @observable stroke = '#000000';
+  @observable strokeWidth = 1;
 }

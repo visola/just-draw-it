@@ -145,6 +145,7 @@ export default class Canvas extends React.Component {
   render() {
     return (
       <svg
+        className="canvas"
         xmlns="http://www.w3.org/2000/svg"
         ref={this.getSvgContent.bind(this)}
         onMouseDown={this.handleSVGMouseDown.bind(this)}
