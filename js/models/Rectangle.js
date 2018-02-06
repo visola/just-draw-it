@@ -1,13 +1,14 @@
 import { observable } from 'mobx';
 
-export default class Rectangle {
-  type = 'Rectangle';
-  @observable height;
-  @observable id = Date.now();
-  @observable width;
-  @observable x;
-  @observable y;
-  @observable fill = '#cccccc';
-  @observable stroke = '#000000';
-  @observable strokeWidth = 1;
+import Drawable from './Drawable';
+import Rect from '../components/drawables/Rect';
+
+export default class Rectangle extends Drawable {
+  get component() {
+    return Rect;
+  }
+
+  get type() {
+    return 'Rectangle';
+  }
 }

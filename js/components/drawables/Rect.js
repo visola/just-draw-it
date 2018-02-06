@@ -3,24 +3,20 @@ import React from 'react';
 
 export default class Rect extends React.Component {
   static propTypes = {
-    x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
-    rect: PropTypes.object.isRequired,
+    drawable: PropTypes.object.isRequired,
   }
 
   render() {
     const {
-      fill, height, id, stroke, strokeWidth, width,
-    } = this.props.rect;
-    const { x, y } = this.props;
+      fill, height, id, stroke, strokeWidth,x, y, width,
+    } = this.props.drawable;
 
     return <rect
       fill={fill}
       strokeWidth={strokeWidth}
       stroke={stroke}
       data-id={id}
-      data-drawable="true"
-      data-type="rect"
+      data-type="drawable"
       height={height}
       width={width}
       x={x}

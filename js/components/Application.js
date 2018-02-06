@@ -8,6 +8,8 @@ import Rectangle from '../models/Rectangle';
 import RectIcon from './icons/RectIcon';
 import StrokeWidthIcon from './icons/StrokeWidthIcon';
 
+import SelectionTool from '../models/tools/SelectionTool';
+
 const SVG_MIME_TYPE = 'image/svg+xml';
 
 @observer
@@ -16,8 +18,9 @@ export default class Application extends React.Component {
     super(props);
     this.state = {
       drawables: new Drawables(),
-      selected: null,
+      selection: [],
       svg: null,
+      selectedTool: new SelectionTool(),
     };
   }
 
@@ -77,8 +80,9 @@ export default class Application extends React.Component {
           {this.renderControlsForSelected()}
         </div>
         <Canvas
-          onDrawableSelected={this.handleDrawableSelected.bind(this)}
-          onDrop={this.handleDropDrawable.bind(this)}
+          onDrop={this.state.selectedTool.handleOnDrop}
+          onDrag={this.state.selectedTool.handleOnDrag}
+          onDragStart={this.state.selectedTool.handleOnDragStart}
           onSvgContentChange={this.handleSvgContentChanged.bind(this)}
           drawables={this.state.drawables} />
       </div>
