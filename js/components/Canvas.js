@@ -52,37 +52,21 @@ export default class Canvas extends React.Component {
 
   handleMouseDown(e) {
     const clickable = this.getClickable(e.clientX, e.clientY);
-    if (clickable.isDraggable) {
-      const state = {
-        dragging: clickable,
-        initialX: e.clientX,
-        initialY: e.clientY,
-      };
-      this.setState(state);
+    const state = {
+      dragging: clickable,
+      initialX: e.clientX,
+      initialY: e.clientY,
+    };
+    this.setState(state);
 
-      this.triggerPositionEvent('onDragStart', state, e);
-    } else {
-      this.setState({
-        dragging: null,
-      });
-    }
+    this.triggerPositionEvent('onDragStart', state, e);
   }
 
   handleMouseMove(e) {
-    const { dragging } = this.state;
-    if (!dragging) {
-      return;
-    }
-
     this.triggerPositionEvent('onDrag', this.state, e);
   }
 
   handleMouseDrop(e) {
-    const { dragging } = this.state;
-    if (!dragging) {
-      return;
-    }
-
     this.triggerPositionEvent('onDrop', this.state, e);
     this.setState({ dragging: null });
   }

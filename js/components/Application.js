@@ -85,6 +85,9 @@ export default class Application extends React.Component {
           onDragStart={this.state.selectedTool.handleOnDragStart}
           onSvgContentChange={this.handleSvgContentChanged.bind(this)}
           drawables={this.state.drawables} />
+        <div>
+          {this.state.selectedTool.selection.map((s) => <span key={s.id}>{s.x},{s.y}</span>)}
+        </div>
       </div>
     );
   }
