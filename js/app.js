@@ -1,6 +1,14 @@
+import { Provider } from 'mobx-react';
 import React from 'react';
 import { render } from 'react-dom';
 
 import Application from './components/Application';
+import stores from './stores';
 
-render(<Application />, document.getElementById('container'));
+const ApplicationWithState = () => (
+  <Provider {...stores}>
+    <Application />
+  </Provider>
+);
+
+render(<ApplicationWithState />, document.getElementById('container'));

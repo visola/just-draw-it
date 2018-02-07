@@ -1,6 +1,8 @@
+import { observer } from 'mobx-react';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+@observer
 export default class Rect extends React.Component {
   static propTypes = {
     drawable: PropTypes.object.isRequired,
