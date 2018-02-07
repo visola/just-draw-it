@@ -10,9 +10,9 @@ import SelectionBox from './SelectionBox';
 export default class Canvas extends React.Component {
   static propTypes = {
     drawables: PropTypes.object.isRequired,
-    onDragStart: PropTypes.func.isRequired,
     onDrag: PropTypes.func.isRequired,
     onDrop: PropTypes.func.isRequired,
+    onMouseDown: PropTypes.func.isRequired,
     onSvgContentChange: PropTypes.func.isRequired,
   }
 
@@ -59,11 +59,13 @@ export default class Canvas extends React.Component {
     };
     this.setState(state);
 
-    this.triggerPositionEvent('onDragStart', state, e);
+    this.triggerPositionEvent('onMouseDown', state, e);
   }
 
   handleMouseMove(e) {
-    this.triggerPositionEvent('onDrag', this.state, e);
+    if (this.state.dragging) {
+      this.triggerPositionEvent('onDrag', this.state, e);
+    }
   }
 
   handleMouseDrop(e) {

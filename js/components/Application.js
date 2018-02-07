@@ -80,9 +80,9 @@ export default class Application extends React.Component {
           {this.renderControlsForSelected()}
         </div>
         <Canvas
-          onDrop={this.state.selectedTool.handleOnDrop}
-          onDrag={this.state.selectedTool.handleOnDrag}
-          onDragStart={this.state.selectedTool.handleOnDragStart}
+          onDrop={this.state.selectedTool.handleDrop}
+          onDrag={this.state.selectedTool.handleDrag}
+          onMouseDown={this.state.selectedTool.handleMouseDown}
           onSvgContentChange={this.handleSvgContentChanged.bind(this)}
           drawables={this.state.drawables} />
         <div>

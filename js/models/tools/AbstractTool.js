@@ -1,5 +1,5 @@
 export default class AbstractTool {
-  handleOnDrop() {}
-  handleOnDrag() {}
-  handleOnDragStart() {}
+  handleDrop() {}
+  handleDrag() {}
+  handleMouseDown() {}
 }

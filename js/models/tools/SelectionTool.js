@@ -7,18 +7,13 @@ export default class SelectionTool extends AbstractTool {
   
   constructor() {
     super();
-    this.handleOnDrop = this.handleOnDrop.bind(this);
-    this.handleOnDragStart = this.handleOnDragStart.bind(this);
-    this.handleOnDrag = this.handleOnDrag.bind(this);
+    this.handleDrop = this.handleDrop.bind(this);
+    this.handleMouseDown = this.handleMouseDown.bind(this);
+    this.handleDrag = this.handleDrag.bind(this);
   }
 
   @action
-  handleOnDrop() {
-    this.selection.clear();
-  }
-
-  @action
-  handleOnDragStart(dragging, offsetX, offsetY) {
+  handleMouseDown(dragging, offsetX, offsetY) {
     const { drawables } = dragging;
     this.selection.clear();
     if (drawables.length > 0) {
@@ -31,7 +26,7 @@ export default class SelectionTool extends AbstractTool {
   }
 
   @action
-  handleOnDrag(dragging, offsetX, offsetY) {
+  handleDrag(dragging, offsetX, offsetY) {
     if (this.selection.length > 0) {
       this.selection[0].x = this.initialX + offsetX;
       this.selection[0].y = this.initialY + offsetY;
