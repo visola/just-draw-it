@@ -99,6 +99,9 @@ export default class Canvas extends React.Component {
 
   renderSelectionBox() {
     const { boundingRect } = this.props.selection;
+    if (boundingRect) {
+      return <SelectionBox rect={boundingRect} />
+    }
   }
 
   triggerPositionEvent(eventName, state, clickEvent) {
