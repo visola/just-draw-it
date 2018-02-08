@@ -1,10 +1,7 @@
-import { action } from 'mobx';
-
 import AbstractTool from './AbstractTool';
 import Rectangle from '../models/Rectangle';
 
 export default class RectTool extends AbstractTool {
-  @action
   onMouseDown(position) {
     this.initialPosition = position;
     this.rect = new Rectangle();
@@ -16,17 +13,32 @@ export default class RectTool extends AbstractTool {
     this.drawables.push(this.rect);
   }
 
-  @action
   onDrag(position) {
     if (this.initialPosition) {
-      this.rect.height = position.offsetY;
-      this.rect.width = position.offsetX;
+      let height = position.offsetY;
+      let width = position.offsetX;
+
+      if (height < 0) {
+        height = Math.abs(height);
+        this.rect.y = this.initialPosition.y - height;
+      }
+
+      if (width < 0) {
+        width = Math.abs(width);
+        this.rect.x = this.initialPosition.x - width;
+      }
+
+      this.rect.height = height;
+      this.rect.width = width;
     }
   }
 
-  @action
   onDrop() {
     this.initialPosition = null;
     this.rect = null;
+  }
+
+  supports(selection) {
+    return true;
   }
 }
