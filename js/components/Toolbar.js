@@ -17,11 +17,6 @@ export default class Toolbar extends React.Component {
     super(props);
   }
 
-  componentWillMount() {
-    const { drawables, selection, tools } = this.props;
-    tools.loadTools(drawables, selection);
-  }
-
   handleClick(tool) {
     this.props.tools.select(tool);
   }
