@@ -9,8 +9,15 @@ export default class Tools {
   @action
   loadTools(drawables, selection) {
     tools.forEach((toolClass) => {
-      this.all.push(new toolClass(drawables, selection));
+      const toolInstance = new toolClass(drawables, selection);
+
+      toolInstance.on('done', () => {
+        this.selectedTool = this.all[0];
+      });
+
+      this.all.push(toolInstance);
     });
+
     this.selectedTool = this.all[0];
   }
 

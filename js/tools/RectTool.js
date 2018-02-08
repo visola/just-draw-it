@@ -34,11 +34,9 @@ export default class RectTool extends AbstractTool {
   }
 
   onDrop() {
+    this.selection.select(this.rect);
     this.initialPosition = null;
     this.rect = null;
-  }
-
-  supports(selection) {
-    return true;
+    this.emit("done");
   }
 }
