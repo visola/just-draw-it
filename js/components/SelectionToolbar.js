@@ -32,16 +32,20 @@ export default class Toolbar extends React.Component {
   }
 
   renderTool(tool, index, selected) {
-    if (tool instanceof AbstractSelectionTool) {
+    if (!(tool instanceof AbstractSelectionTool)) {
       return;
     }
 
     const ToolComponent = toolsComponents.getComponentForTool(tool);
-    return <ToolComponent
-      key={index}
-      onClick={this.handleClick.bind(this, tool)}
-      selected={selected}
-      tool={tool}
-    />;
+    if (tool.isActive()) {
+      return (
+        <ToolComponent
+          key={index}
+          onClick={this.handleClick.bind(this, tool)}
+          selected={selected}
+          tool={tool}
+        />
+      );
+    }
   }
 }

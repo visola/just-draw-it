@@ -42,6 +42,16 @@ export default class Selection {
     };
   }
 
+  @computed
+  get empty() {
+    return this.drawables.length === 0;
+  }
+
+  @action
+  forEach(callback) {
+    this.drawables.forEach(callback);
+  }
+
   @action
   select(drawable) {
     this.drawables.push(drawable);
