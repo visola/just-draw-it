@@ -7,15 +7,11 @@ import AbstractSelectionTool from '../tools/AbstractSelectionTool';
 
 @inject('drawables', 'selection', 'tools')
 @observer
-export default class Toolbar extends React.Component {
-  static propTyps = {
+export default class SelectionToolbar extends React.Component {
+  static propTypes = {
     drawables: PropTypes.object.isRequired,
     selection: PropTypes.object.isRequired,
     tools: PropTypes.object.isRequired,
-  }
-
-  constructor(props) {
-    super(props);
   }
 
   handleClick(tool) {
@@ -33,7 +29,7 @@ export default class Toolbar extends React.Component {
 
   renderTool(tool, index, selected) {
     if (!(tool instanceof AbstractSelectionTool)) {
-      return;
+      return null;
     }
 
     const ToolComponent = toolsComponents.getComponentForTool(tool);
@@ -47,5 +43,7 @@ export default class Toolbar extends React.Component {
         />
       );
     }
+
+    return null;
   }
 }

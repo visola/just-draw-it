@@ -13,7 +13,7 @@ export default class MoveResizeSelectToolComponent extends React.Component {
   render() {
     return (
       <button
-        className={classnames({ "btn":true, "btn-default": true, "active": this.props.selected })}
+        className={classnames({ btn: true, 'btn-default': true, active: this.props.selected })}
         onClick={this.props.onClick}
       >
         <PointerIcon />

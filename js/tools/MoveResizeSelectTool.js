@@ -19,7 +19,7 @@ export default class MoveResizeSelectTool extends AbstractTool {
     }
   }
 
-  onDrag(position, dragging) {
+  onDrag(position) {
     const { drawables } = this.selection;
     if (drawables.length > 0) {
       const { offsetX, offsetY } = position;

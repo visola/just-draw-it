@@ -20,7 +20,7 @@ export default class StrokeWidthToolComponent extends React.Component {
     return (
       <div>
         <button
-          className={classnames({ "btn":true, "btn-default": true, "active": this.props.selected })}
+          className={classnames({ btn: true, 'btn-default': true, active: this.props.selected })}
           onClick={this.props.onClick}
         >
           <StrokeWidthIcon />

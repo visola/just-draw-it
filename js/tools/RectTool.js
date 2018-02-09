@@ -40,6 +40,6 @@ export default class RectTool extends AbstractTool {
     this.selection.select(this.rect);
     this.initialPosition = null;
     this.rect = null;
-    this.emit("done");
+    this.emit('done');
   }
 }

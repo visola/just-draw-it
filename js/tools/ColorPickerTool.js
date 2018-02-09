@@ -2,11 +2,17 @@ import AbstractTool from './AbstractTool';
 
 export default class ColorPickerTool extends AbstractTool {
   get fillColor() {
-    return this.selection.empty ? this.drawingProperties.fillColor : this.selection.drawables[0].fill;
+    if (this.selection.empty) {
+      return this.drawingProperties.fillColor;
+    }
+    return this.selection.drawables[0].fill;
   }
 
   get strokeColor() {
-    return this.selection.empty ? this.drawingProperties.strokeColor : this.selection.drawables[0].stroke;
+    if (this.selection.empty) {
+      return this.drawingProperties.strokeColor;
+    }
+    return this.selection.drawables[0].stroke;
   }
 
   setFillColor(newColor) {

@@ -22,5 +22,7 @@ export default {
     if (tool instanceof StrokeWidthTool) {
       return StrokeWidthToolComponent;
     }
-  }
-}
+
+    throw new Error(`${tool} not registered`);
+  },
+};

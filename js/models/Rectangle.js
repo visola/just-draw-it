@@ -1,5 +1,3 @@
-import { observable } from 'mobx';
-
 import Drawable from './Drawable';
 import Rect from '../components/drawables/Rect';
 

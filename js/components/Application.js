@@ -7,10 +7,6 @@ import Toolbar from './Toolbar';
 
 @observer
 export default class Application extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <div><Toolbar /><Canvas /><SelectionToolbar /></div>

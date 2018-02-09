@@ -8,7 +8,6 @@ export default class StrokeWidthTool extends AbstractSelectionTool {
   setWidth(newWidth) {
     this.selection.forEach((d) => {
       d.strokeWidth = newWidth;
-      return;
     });
     this.emit('done');
   }

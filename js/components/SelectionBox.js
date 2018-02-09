@@ -7,7 +7,9 @@ export default class SelectionBox extends React.Component {
   }
 
   render() {
-    const { height, width, x, y } = this.props.rect;
+    const {
+      height, width, x, y,
+    } = this.props.rect;
     return <rect
       fill="none"
       stroke="#00FF00"

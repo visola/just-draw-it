@@ -25,13 +25,13 @@ export default class Canvas extends React.Component {
 
   getClickable(x, y) {
     const elements = document.elementsFromPoint(x, y);
-    let result = {
+    const result = {
       drawables: [],
     };
 
     elements.reverse().forEach((e) => {
       const { id, type } = e.dataset;
-      switch(type) {
+      switch (type) {
         case 'drawable':
           result.drawables.push(this.props.drawables.findById(id));
           break;
@@ -93,20 +93,23 @@ export default class Canvas extends React.Component {
   renderDrawables() {
     return this.props.drawables.map((drawable) => {
       const Component = drawable.component;
-      return <Component key={drawable.id} drawable={drawable} />
+      return <Component key={drawable.id} drawable={drawable} />;
     });
   }
 
   renderSelectionBox() {
     const { boundingRect } = this.props.selection;
     if (boundingRect) {
-      return <SelectionBox rect={boundingRect} />
+      return <SelectionBox rect={boundingRect} />;
     }
+    return null;
   }
 
   triggerPositionEvent(eventName, state, clickEvent) {
     const { selectedTool } = this.props.tools;
-    const { clientX, clientY, dragging, initialX, initialY } = state;
+    const {
+      clientX, clientY, dragging, initialX, initialY,
+    } = state;
 
     const position = {
       offsetX: clickEvent.clientX - initialX,

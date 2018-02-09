@@ -19,7 +19,7 @@ export default class StrokeWidthToolComponent extends React.Component {
     this.state = {
       pickingFill: false,
       pickingStroke: false,
-    }
+    };
   }
 
   handleBlur() {
@@ -40,17 +40,17 @@ export default class StrokeWidthToolComponent extends React.Component {
   handleClickStroke() {
     this.setState({ pickingStroke: true });
   }
-  
+
   handleClickFill() {
     this.setState({ pickingFill: true });
   }
 
   render() {
-    let { fillColor, strokeColor } = this.props.tool;
+    const { fillColor, strokeColor } = this.props.tool;
     return (
       <div>
         <button
-          className={classnames({ "btn":true, "btn-default": true, "active": this.props.selected })}
+          className={classnames({ btn: true, 'btn-default': true, active: this.props.selected })}
           onClick={this.props.onClick}
         >
           <ColorsIcon
@@ -76,5 +76,7 @@ export default class StrokeWidthToolComponent extends React.Component {
         <SketchPicker color={color} onChange={this.handleColorChange.bind(this)} />
       </div>;
     }
+
+    return null;
   }
 }

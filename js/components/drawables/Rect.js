@@ -10,7 +10,7 @@ export default class Rect extends React.Component {
 
   render() {
     const {
-      fill, height, id, stroke, strokeWidth,x, y, width,
+      fill, height, id, stroke, strokeWidth, x, y, width,
     } = this.props.drawable;
 
     return <rect
