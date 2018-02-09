@@ -1,9 +1,9 @@
 import RectTool from './RectTool';
-import SelectionTool from './SelectionTool';
+import MoveResizeSelectTool from './MoveResizeSelectTool';
 import StrokeWidthTool from './StrokeWidthTool';
 
 export default [
-  SelectionTool,
+  MoveResizeSelectTool,
   RectTool,
   StrokeWidthTool,
 ];

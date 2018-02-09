@@ -1,6 +1,6 @@
 import AbstractTool from './AbstractTool';
 
-export default class SelectionTool extends AbstractTool {
+export default class MoveResizeSelectTool extends AbstractTool {
   constructor(drawables, selection) {
     super(drawables, selection);
     this.onMouseDown = this.onMouseDown.bind(this);

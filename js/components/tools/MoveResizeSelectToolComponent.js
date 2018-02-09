@@ -4,7 +4,7 @@ import React from 'react';
 
 import PointerIcon from '../icons/PointerIcon';
 
-export default class SelectionToolComponent extends React.Component {
+export default class MoveResizeSelectToolComponent extends React.Component {
   static propTypes = {
     onClick: PropTypes.func.isRequired,
     selected: PropTypes.bool.isRequired,

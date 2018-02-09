@@ -1,9 +1,9 @@
 import RectToolComponent from './RectToolComponent';
-import SelectionToolComponent from './SelectionToolComponent';
+import MoveResizeSelectToolComponent from './MoveResizeSelectToolComponent';
 import StrokeWidthToolComponent from './StrokeWidthToolComponent';
 
 import RectTool from '../../tools/RectTool';
-import SelectionTool from '../../tools/SelectionTool';
+import MoveResizeSelectTool from '../../tools/MoveResizeSelectTool';
 import StrokeWidthTool from '../../tools/StrokeWidthTool';
 
 export default {
@@ -11,8 +11,8 @@ export default {
     if (tool instanceof RectTool) {
       return RectToolComponent;
     }
-    if (tool instanceof SelectionTool) {
-      return SelectionToolComponent;
+    if (tool instanceof MoveResizeSelectTool) {
+      return MoveResizeSelectToolComponent;
     }
     if (tool instanceof StrokeWidthTool) {
       return StrokeWidthToolComponent;
