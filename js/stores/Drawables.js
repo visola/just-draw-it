@@ -3,7 +3,11 @@ import { action, computed, observable } from 'mobx';
 export default class Drawables {
   @observable collection = [];
 
-  find(id) {
+  find(callback) {
+    return this.collection.find(callback);
+  }
+
+  findById(id) {
     const intId = parseInt(id, 10);
     return this.collection.find((d) => d.id === intId);
   }

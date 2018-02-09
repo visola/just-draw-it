@@ -1,4 +1,7 @@
-@import "./color-picker";
+#container > div {
+  align-items: flex-start;
+  display: flex;
+}
 
 .dragging {
   stroke: rgb(229, 229, 175);
@@ -12,17 +15,31 @@ svg.canvas {
 }
 
 svg.icon {
-  height: 20px;
-  width: 20px;
+  height: 35px;
+  width: 35px;
 }
 
 .toolbar {
   display: flex;
   flex-direction: column;
-  float: left;
   margin-top: 5px;
+  max-width: 55px;
 
   > * {
     margin: 5px;
+  }
+
+  .btn {
+    padding: 5px;
+  }
+
+  > div {
+    position: relative;
+
+    > div {
+      left: 100%;
+      position: absolute;
+      top: 0;
+    }
   }
 }
