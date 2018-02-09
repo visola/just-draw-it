@@ -9,6 +9,8 @@ export default class RectTool extends AbstractTool {
     this.rect.y = position.y;
     this.rect.height = 0;
     this.rect.width = 0;
+    this.rect.fill = this.drawingProperties.fillColor;
+    this.rect.stroke = this.drawingProperties.strokeColor;
 
     this.drawables.push(this.rect);
   }

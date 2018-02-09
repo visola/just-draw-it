@@ -1,8 +1,8 @@
 import AbstractTool from './AbstractTool';
 
 export default class MoveResizeSelectTool extends AbstractTool {
-  constructor(drawables, selection) {
-    super(drawables, selection);
+  constructor(drawables, drawingProperties, selection) {
+    super(drawables, drawingProperties, selection);
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onDrag = this.onDrag.bind(this);
   }
