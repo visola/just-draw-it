@@ -19,7 +19,10 @@ export default class ColorPickerTool extends AbstractTool {
     if (this.selection.empty) {
       this.drawingProperties.fillColor = newColor;
     } else {
-      this.selection.drawables[0].fill = newColor;
+      this.selection.drawables.forEach((d) => {
+        d.fill = newColor;
+        return null;
+      });
     }
     this.emit('done');
   }
@@ -28,7 +31,10 @@ export default class ColorPickerTool extends AbstractTool {
     if (this.selection.empty) {
       this.drawingProperties.strokeColor = newColor;
     } else {
-      this.selection.drawables[0].stroke = newColor;
+      this.selection.drawables.forEach((d) => {
+        d.stroke = newColor;
+        return null;
+      });
     }
     this.emit('done');
   }

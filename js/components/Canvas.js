@@ -116,6 +116,10 @@ export default class Canvas extends React.Component {
       offsetY: clickEvent.clientY - initialY,
       x: clickEvent.clientX - clientX,
       y: clickEvent.clientY - clientY,
+      shiftKey: clickEvent.shiftKey,
+      metaKey: clickEvent.metaKey,
+      ctrlKey: clickEvent.ctrlKey,
+      altKey: clickEvent.altKey,
     };
 
     selectedTool[eventName](position, dragging);
