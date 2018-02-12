@@ -9,7 +9,6 @@ import ColorsIcon from '../icons/ColorsIcon';
 @observer
 export default class StrokeWidthToolComponent extends React.Component {
   static propTypes = {
-    onClick: PropTypes.func.isRequired,
     selected: PropTypes.bool.isRequired,
     tool: PropTypes.object.isRequired,
   }
@@ -51,7 +50,6 @@ export default class StrokeWidthToolComponent extends React.Component {
       <div>
         <button
           className={classnames({ btn: true, 'btn-default': true, active: this.props.selected })}
-          onClick={this.props.onClick}
         >
           <ColorsIcon
             fillColor={fillColor}

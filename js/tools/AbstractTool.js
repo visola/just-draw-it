@@ -12,4 +12,5 @@ export default class AbstractTool extends EventEmitter {
   onDrag() {}
   onMouseDown() {}
   onMouseMove() {}
+  onSVGChange() {}
 }
