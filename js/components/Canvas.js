@@ -20,6 +20,7 @@ export default class Canvas extends React.Component {
       dragging: null,
       clientX: null,
       clientY: null,
+      svg: null,
     };
   }
 
@@ -72,10 +73,21 @@ export default class Canvas extends React.Component {
     this.setState({ dragging: null });
   }
 
+  handleSVGRef(svgEl) {
+    if (svgEl) {
+      const svg = svgEl.outerHTML;
+      if (svg !== this.state.svg) {
+        this.setState({ svg });
+        this.props.tools.all.forEach((t) => t.onSVGChange(svg));
+      }
+    }
+  }
+
   render() {
     return (
       <svg
         className="canvas"
+        ref={this.handleSVGRef.bind(this)}
         xmlns="http://www.w3.org/2000/svg"
         onMouseDown={this.handleMouseDown.bind(this)}
         onMouseMove={this.handleMouseMove.bind(this)}
