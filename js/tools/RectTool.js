@@ -1,5 +1,9 @@
+import classnames from 'classnames';
+import React from 'react';
+
 import AbstractTool from './AbstractTool';
 import Rectangle from '../models/Rectangle';
+import RectIcon from '../components/icons/RectIcon';
 
 export default class RectTool extends AbstractTool {
   onMouseDown(position) {
@@ -41,5 +45,17 @@ export default class RectTool extends AbstractTool {
     this.initialPosition = null;
     this.rect = null;
     this.emit('done');
+  }
+
+  render(selected, onClick) {
+    return (
+      <button
+        key="rect-tool"
+        className={classnames({ btn: true, 'btn-default': true, active: selected })}
+        onClick={onClick}
+      >
+        <RectIcon />
+      </button>
+    );
   }
 }

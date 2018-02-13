@@ -13,4 +13,8 @@ export default class AbstractTool extends EventEmitter {
   onMouseDown() {}
   onMouseMove() {}
   onSVGChange() {}
+
+  render() {
+    throw new Error(`Not implemented for ${this}`);
+  }
 }

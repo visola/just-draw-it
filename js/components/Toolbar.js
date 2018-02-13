@@ -2,7 +2,6 @@ import { inject, observer } from 'mobx-react';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import toolsComponents from './tools/toolsComponents';
 import AbstractSelectionTool from '../tools/AbstractSelectionTool';
 
 @inject('drawables', 'selection', 'tools')
@@ -32,12 +31,6 @@ export default class Toolbar extends React.Component {
       return null;
     }
 
-    const ToolComponent = toolsComponents.getComponentForTool(tool);
-    return <ToolComponent
-      key={index}
-      onClick={this.handleClick.bind(this, tool)}
-      selected={selected}
-      tool={tool}
-    />;
+    return tool.render(selected, this.handleClick.bind(this, tool));
   }
 }
