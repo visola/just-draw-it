@@ -1,4 +1,8 @@
+import classnames from 'classnames';
+import React from 'react';
+
 import AbstractTool from './AbstractTool';
+import PointerIcon from '../components/icons/PointerIcon';
 
 export default class MoveResizeSelectTool extends AbstractTool {
   constructor(drawables, drawingProperties, selection) {
@@ -38,5 +42,17 @@ export default class MoveResizeSelectTool extends AbstractTool {
       d.x = this.initialPositionById[d.id].x + offsetX;
       d.y = this.initialPositionById[d.id].y + offsetY;
     });
+  }
+
+  render(selected, onClick) {
+    return (
+      <button
+        key="select-transform-tool"
+        className={classnames({ btn: true, 'btn-default': true, active: selected })}
+        onClick={onClick}
+      >
+        <PointerIcon />
+      </button>
+    );
   }
 }
