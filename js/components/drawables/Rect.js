@@ -18,7 +18,7 @@ export default class Rect extends React.Component {
       strokeWidth={strokeWidth}
       stroke={stroke}
       data-id={id}
-      data-type="drawable"
+      data-type="drawables"
       height={height}
       width={width}
       x={x}

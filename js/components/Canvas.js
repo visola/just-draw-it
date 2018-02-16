@@ -26,18 +26,13 @@ export default class Canvas extends React.Component {
 
   getClickable(x, y) {
     const elements = document.elementsFromPoint(x, y);
-    const result = {
-      drawables: [],
-    };
+    const result = {};
 
     elements.reverse().forEach((e) => {
       const { id, type } = e.dataset;
-      switch (type) {
-        case 'drawable':
-          result.drawables.push(this.props.drawables.findById(id));
-          break;
-        default:
-          // Do nothing
+      if (type && id) {
+        result[type] = result[type] || [];
+        result[type].push(this.props.drawables.findById(id));
       }
     });
     return new Clickable(result);

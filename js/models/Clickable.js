@@ -4,6 +4,6 @@ export default class Clickable {
   }
 
   get isDraggable() {
-    return this.drawables.length > 0;
+    return this.drawables && this.drawables.length > 0;
   }
 }
