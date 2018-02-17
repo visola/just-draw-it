@@ -27,17 +27,18 @@ export default class Selection {
     let maxY = 0;
 
     this.drawables.forEach((d) => {
+      const halfStrokeWidth = d.strokeWidth / 2;
       if (minX > d.x) {
-        minX = d.x - d.strokeWidth;
+        minX = d.x - halfStrokeWidth;
       }
       if (minY > d.y) {
-        minY = d.y - d.strokeWidth;
+        minY = d.y - halfStrokeWidth;
       }
       if (maxX < d.x + d.width) {
-        maxX = d.x + d.width + d.strokeWidth;
+        maxX = d.x + d.width + halfStrokeWidth;
       }
       if (maxY < d.y + d.height) {
-        maxY = d.y + d.height + d.strokeWidth;
+        maxY = d.y + d.height + halfStrokeWidth;
       }
     });
 
