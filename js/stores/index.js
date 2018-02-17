@@ -6,7 +6,8 @@ import Tools from './Tools';
 const drawables = new Drawables();
 const drawingProperties = new DrawingProperties();
 const selection = new Selection();
-const tools = new Tools();
+
+const tools = new Tools(drawables, drawingProperties, selection);
 
 export default {
   drawables,
