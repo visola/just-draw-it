@@ -25,4 +25,15 @@ export default class Drawables {
   push(drawable) {
     this.collection.push(drawable);
   }
+
+  @action
+  remove(toRemoveIds) {
+    const newDrawables = [];
+    this.collection.forEach((d) => {
+      if (toRemoveIds.indexOf(d.id) < 0) {
+        newDrawables.push(d);
+      }
+    });
+    this.collection = newDrawables;
+  }
 }

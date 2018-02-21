@@ -26,16 +26,15 @@ export default class SelectTransformTool extends AbstractTool {
       }
 
       this.selection.addToSelection(selection);
-      this.selection.drawables.forEach((d) => {
+      this.selection.forEach((d) => {
         this.initialPositionById[d.id] = { x: d.x, y: d.y };
       });
     }
   }
 
   onDrag(position) {
-    const { drawables } = this.selection || [];
     const { offsetX, offsetY } = position;
-    drawables.forEach((d) => {
+    this.selection.forEach((d) => {
       d.x = this.initialPositionById[d.id].x + offsetX;
       d.y = this.initialPositionById[d.id].y + offsetY;
     });
