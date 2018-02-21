@@ -22,7 +22,7 @@ export default class ExportSVGTool extends AbstractTool {
   }
 
   isActive() {
-    return this.selection.empty;
+    return this.selection.isEmpty;
   }
 
   onSVGChange(svg) {
