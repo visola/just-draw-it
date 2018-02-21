@@ -11,7 +11,7 @@ export default class ControlPoint extends React.Component {
     return <rect
       data-id={drawable.id}
       data-type="controlPoints"
-      fill="#AABB00"
+      fill="rgba(150, 100, 0, 0.3)"
       height={drawable.height}
       width={drawable.width}
       x={drawable.x - (drawable.width / 2)}
