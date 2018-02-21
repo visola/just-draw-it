@@ -15,10 +15,10 @@ export default class Selection extends Collection {
   addControlPoints(boundingRect) {
     const { x, y, height, width } = boundingRect;
     this.controlPoints = [
-      new ControlPoint(x, y),
-      new ControlPoint(x, y + height),
-      new ControlPoint(x + width, y),
-      new ControlPoint(x + width, y + height),
+      new ControlPoint('n', 'w', x, y),
+      new ControlPoint('s', 'w', x, y + height),
+      new ControlPoint('n', 'e', x + width, y),
+      new ControlPoint('s', 'e', x + width, y + height),
     ];
     this.drawables.pushAll(this.controlPoints);
   }
