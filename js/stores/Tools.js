@@ -6,8 +6,7 @@ export default class Tools {
   @observable all = [];
   @observable selectedTool;
 
-  @action
-  loadTools(drawables, drawingProperties, selection) {
+  constructor(drawables, drawingProperties, selection) {
     tools.forEach((ToolClass) => {
       const toolInstance = new ToolClass(drawables, drawingProperties, selection);
 

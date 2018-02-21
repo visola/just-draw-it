@@ -5,8 +5,4 @@ export default class Rectangle extends Drawable {
   get component() {
     return Rect;
   }
-
-  get type() {
-    return 'Rectangle';
-  }
 }

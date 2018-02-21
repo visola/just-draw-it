@@ -12,9 +12,9 @@ export default class SelectionBox extends React.Component {
     } = this.props.rect;
     return <rect
       fill="none"
-      stroke="#888888"
-      strokeDasharray="10,10"
-      strokeWidth="2"
+      stroke="#000"
+      strokeDasharray="5,5"
+      strokeWidth="1"
       height={height + 2}
       width={width + 2}
       x={x - 1}

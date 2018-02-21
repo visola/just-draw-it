@@ -1,23 +1,40 @@
-import { action, computed, observable } from 'mobx';
+import { action, autorun, computed, observable } from 'mobx';
 
-export default class Selection {
-  @observable drawables = [];
+import Collection from './Collection';
+import ControlPoint from '../models/ControlPoint';
 
-  @action
-  clear() {
-    this.drawables.clear();
+export default class Selection extends Collection {
+  @observable controlPoints = [];
+
+  constructor(drawables) {
+    super();
+    this.drawables = drawables;
+    autorun(() => this.updateControlPoints())
   }
 
-  @action
-  addToSelection(drawable) {
-    if (!this.isSelected(drawable)) {
-      this.drawables.push(drawable);
+  addControlPoints(boundingRect) {
+    const { x, y, height, width } = boundingRect;
+    this.controlPoints = [
+      new ControlPoint('n', 'w', x, y),
+      new ControlPoint('s', 'w', x, y + height),
+      new ControlPoint('n', 'e', x + width, y),
+      new ControlPoint('s', 'e', x + width, y + height),
+    ];
+    this.drawables.pushAll(this.controlPoints);
+  }
+
+  clearControlPoints() {
+    if (this.controlPoints.length === 0) {
+      return;
     }
+
+    this.drawables.removeByIds(this.controlPoints.map((c) => c.id));
+    this.controlPoints = [];
   }
 
   @computed
   get boundingRect() {
-    if (this.drawables.length === 0) {
+    if (this.collection.length === 0) {
       return null;
     }
 
@@ -26,18 +43,19 @@ export default class Selection {
     let maxX = 0;
     let maxY = 0;
 
-    this.drawables.forEach((d) => {
+    this.collection.forEach((d) => {
+      const halfStrokeWidth = d.strokeWidth / 2;
       if (minX > d.x) {
-        minX = d.x - d.strokeWidth;
+        minX = d.x - halfStrokeWidth;
       }
       if (minY > d.y) {
-        minY = d.y - d.strokeWidth;
+        minY = d.y - halfStrokeWidth;
       }
       if (maxX < d.x + d.width) {
-        maxX = d.x + d.width + d.strokeWidth;
+        maxX = d.x + d.width + halfStrokeWidth;
       }
       if (maxY < d.y + d.height) {
-        maxY = d.y + d.height + d.strokeWidth;
+        maxY = d.y + d.height + halfStrokeWidth;
       }
     });
 
@@ -49,22 +67,44 @@ export default class Selection {
     };
   }
 
-  @computed
-  get empty() {
-    return this.drawables.length === 0;
-  }
-
   @action
-  forEach(callback) {
-    this.drawables.forEach(callback);
+  push(drawable) {
+    if (!this.contains(drawable)) {
+      this.collection.push(drawable);
+    }
   }
 
-  isSelected(drawable) {
-    return this.drawables.findIndex((d) => d.id === drawable.id) >= 0;
+  updateControlPoints() {
+    const boundingRect = this.boundingRect;
+    if (boundingRect) {
+      if (this.controlPoints.length === 0) {
+        this.addControlPoints(boundingRect);
+      } else {
+        this.updateControlPointsPositions(boundingRect);
+      }
+    } else {
+      this.clearControlPoints();
+    }
+  }
+
+  updateControlPointsPositions(boundingRect) {
+    const { x, y, height, width } = boundingRect;
+    this.controlPoints[0].x = x;
+    this.controlPoints[0].y = y;
+
+    this.controlPoints[1].x = x;
+    this.controlPoints[1].y = y + height;
+
+    this.controlPoints[2].x = x + width;
+    this.controlPoints[2].y = y;
+
+    this.controlPoints[3].x = x + width;
+    this.controlPoints[3].y = y + height;
   }
 
   @action
   select(drawable) {
-    this.drawables.push(drawable);
+    this.clear();
+    this.push(drawable);
   }
 }

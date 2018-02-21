@@ -11,17 +11,17 @@ export default class ColorPickerTool extends AbstractTool {
   @observable pickingStroke = false;
 
   get fillColor() {
-    if (this.selection.empty) {
+    if (this.selection.isEmpty) {
       return this.drawingProperties.fillColor;
     }
-    return this.selection.drawables[0].fill;
+    return this.selection.first.fill;
   }
 
   get strokeColor() {
-    if (this.selection.empty) {
+    if (this.selection.isEmpty) {
       return this.drawingProperties.strokeColor;
     }
-    return this.selection.drawables[0].stroke;
+    return this.selection.first.stroke;
   }
 
   handleBlur() {
@@ -46,10 +46,10 @@ export default class ColorPickerTool extends AbstractTool {
   }
 
   setFillColor(newColor) {
-    if (this.selection.empty) {
+    if (this.selection.isEmpty) {
       this.drawingProperties.fillColor = newColor;
     } else {
-      this.selection.drawables.forEach((d) => {
+      this.selection.forEach((d) => {
         d.fill = newColor;
         return null;
       });
@@ -58,10 +58,10 @@ export default class ColorPickerTool extends AbstractTool {
   }
 
   setStrokeColor(newColor) {
-    if (this.selection.empty) {
+    if (this.selection.isEmpty) {
       this.drawingProperties.strokeColor = newColor;
     } else {
-      this.selection.drawables.forEach((d) => {
+      this.selection.forEach((d) => {
         d.stroke = newColor;
         return null;
       });

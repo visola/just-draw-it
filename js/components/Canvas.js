@@ -2,8 +2,8 @@ import { inject, observer } from 'mobx-react';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import Clickable from '../models/Clickable';
 import SelectionBox from './SelectionBox';
+import ControlPoint from '../models/ControlPoint';
 
 @inject('drawables', 'selection', 'tools')
 @observer
@@ -26,21 +26,16 @@ export default class Canvas extends React.Component {
 
   getClickable(x, y) {
     const elements = document.elementsFromPoint(x, y);
-    const result = {
-      drawables: [],
-    };
+    const result = {};
 
     elements.reverse().forEach((e) => {
       const { id, type } = e.dataset;
-      switch (type) {
-        case 'drawable':
-          result.drawables.push(this.props.drawables.findById(id));
-          break;
-        default:
-          // Do nothing
+      if (type != null && id != null) {
+        result[type] = result[type] || [];
+        result[type].push(this.props.drawables.findById(id));
       }
     });
-    return new Clickable(result);
+    return result;
   }
 
   handleMouseDown(e) {
@@ -102,17 +97,19 @@ export default class Canvas extends React.Component {
     );
   }
 
+  renderDrawable(drawable) {
+    const Component = drawable.component;
+    return <Component key={drawable.id} drawable={drawable} />;
+  }
+
   renderDrawables() {
-    return this.props.drawables.map((drawable) => {
-      const Component = drawable.component;
-      return <Component key={drawable.id} drawable={drawable} />;
-    });
+    return this.props.drawables.map(this.renderDrawable);
   }
 
   renderSelectionBox() {
     const { boundingRect } = this.props.selection;
     if (boundingRect) {
-      return <SelectionBox rect={boundingRect} />;
+      return <SelectionBox key="selection-box" rect={boundingRect} />;
     }
     return null;
   }
@@ -134,6 +131,6 @@ export default class Canvas extends React.Component {
       altKey: clickEvent.altKey,
     };
 
-    selectedTool[eventName](position, dragging);
+    selectedTool[eventName].call(selectedTool, position, dragging);
   }
 }

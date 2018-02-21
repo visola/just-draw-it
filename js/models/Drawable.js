@@ -15,8 +15,4 @@ export default class Drawable {
   get component() {
     throw new Error('Abstract type.');
   }
-
-  get type() {
-    throw new Error('Abstract type.');
-  }
 }
