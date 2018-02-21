@@ -16,7 +16,6 @@ export default class Canvas extends React.Component {
 
   constructor(props) {
     super(props);
-    this.controlPoints = [];
     this.state = {
       dragging: null,
       clientX: null,
@@ -33,15 +32,10 @@ export default class Canvas extends React.Component {
       const { id, type } = e.dataset;
       if (type != null && id != null) {
         result[type] = result[type] || [];
-        result[type].push(this.getDrawable(id));
+        result[type].push(this.props.drawables.findById(id));
       }
     });
     return result;
-  }
-
-  getDrawable(id) {
-    return this.props.drawables.findById(id) ||
-      this.controlPoints.find((c) => c.id === id);
   }
 
   handleMouseDown(e) {
@@ -115,20 +109,7 @@ export default class Canvas extends React.Component {
   renderSelectionBox() {
     const { boundingRect } = this.props.selection;
     if (boundingRect) {
-      const { x, y, height, width } = boundingRect;
-      this.controlPoints = [
-        new ControlPoint(x, y),
-        new ControlPoint(x, y + height),
-        new ControlPoint(x + width, y),
-        new ControlPoint(x + width, y + height),
-      ];
-
-      return [
-        <SelectionBox key="selection-box" rect={boundingRect} />,
-        ...this.controlPoints.map(this.renderDrawable),
-      ];
-    } else {
-      this.controlPoints = [];
+      return <SelectionBox key="selection-box" rect={boundingRect} />;
     }
     return null;
   }

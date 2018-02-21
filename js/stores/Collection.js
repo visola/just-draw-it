@@ -69,8 +69,13 @@ export default class Collection {
   }
 
   @action
-  push(drawable) {
-    this.collection.push(drawable);
+  push(element) {
+    this.collection.push(element);
+  }
+
+  @action
+  pushAll(elements) {
+    (elements || []).forEach((el) => this.push(el));
   }
 
   @action
