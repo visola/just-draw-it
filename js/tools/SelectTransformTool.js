@@ -20,12 +20,12 @@ export default class SelectTransformTool extends AbstractTool {
       this.initialPositionById = {};
     } else {
       const selection = drawables[drawables.length - 1];
-      if (!position.shiftKey && !this.selection.isSelected(selection)) {
+      if (!position.shiftKey && !this.selection.contains(selection)) {
         this.selection.clear();
         this.initialPositionById = {};
       }
 
-      this.selection.addToSelection(selection);
+      this.selection.push(selection);
       this.selection.forEach((d) => {
         this.initialPositionById[d.id] = { x: d.x, y: d.y };
       });

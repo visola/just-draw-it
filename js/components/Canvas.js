@@ -150,6 +150,6 @@ export default class Canvas extends React.Component {
       altKey: clickEvent.altKey,
     };
 
-    selectedTool[eventName](position, dragging);
+    selectedTool[eventName].call(selectedTool, position, dragging);
   }
 }

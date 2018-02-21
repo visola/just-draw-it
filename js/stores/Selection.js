@@ -1,20 +1,8 @@
 import { action, computed, observable } from 'mobx';
 
-export default class Selection {
-  @observable collection = [];
+import Collection from './Collection';
 
-  @action
-  clear() {
-    this.collection.clear();
-  }
-
-  @action
-  addToSelection(drawable) {
-    if (!this.isSelected(drawable)) {
-      this.collection.push(drawable);
-    }
-  }
-
+export default class Selection extends Collection {
   @computed
   get boundingRect() {
     if (this.collection.length === 0) {
@@ -50,26 +38,16 @@ export default class Selection {
     };
   }
 
-  @computed
-  get empty() {
-    return this.collection.length === 0;
-  }
-
-  get first() {
-    return this.collection[0];
-  }
-
   @action
-  forEach(callback) {
-    this.collection.forEach(callback);
-  }
-
-  isSelected(drawable) {
-    return this.collection.findIndex((d) => d.id === drawable.id) >= 0;
+  push(drawable) {
+    if (!this.contains(drawable)) {
+      this.collection.push(drawable);
+    }
   }
 
   @action
   select(drawable) {
-    this.collection.push(drawable);
+    this.clear();
+    this.push(drawable);
   }
 }
