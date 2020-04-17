@@ -1,21 +1,10 @@
 # just-draw-it
 
+A vanilla Javascript SVG drawing tool.
 Because sometimes you just want to draw.
 
 https://visola.github.io/just-draw-it/
 
-## Getting Started
+# Development
 
-First, install all dependencies:
-
-```
-$ npm install
-```
-
-Then, to run it locally:
-
-```
-$ npm run start
-```
-
-Go to http://localhost:1234 to see the magic.
+Open `index.html` on your browser, the code in your favorite editor and type away!
