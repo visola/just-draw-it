@@ -1,3 +1,4 @@
+/* exported canvas */
 const canvas = (function() {
   const element = document.getElementById('canvas');
 

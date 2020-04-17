@@ -1,4 +1,5 @@
-const actions = (function (canvas) {
+/* exported actions */
+const actions = (function(canvas) {
   const actionsByName = {};
   const canvasEl = canvas.element;
 
@@ -48,6 +49,6 @@ const actions = (function (canvas) {
 
     register(name, action) {
       actionsByName[name] = action;
-    }
+    },
   };
 })(canvas);

@@ -1,4 +1,4 @@
-(function (actions) {
+(function(actions) {
   const menuContainer = document.getElementById('menu');
 
   const menuItems = [
