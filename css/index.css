@@ -1,0 +1,11 @@
+body {
+  padding-left: 90px;
+}
+
+.ui.menu a.item.active {
+  cursor: unset;
+}
+
+svg#canvas {
+  border: 1px solid black;
+}
