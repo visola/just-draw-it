@@ -1,4 +1,4 @@
-(function (canvas, drawingProperties, tools) {
+(function (canvas, drawingProperties, selections, tools) {
   let rect;
   let initialX, initialY;
   let relativeX, relativeY;
@@ -21,9 +21,10 @@
 
     rect.setAttribute('fill', drawingProperties.fillColor);
     rect.setAttribute('stroke', drawingProperties.strokeColor);
-    rect.setAttribute('strokeWidth', 1);
+    rect.setAttribute('stroke-width', 1);
 
     canvas.addElement(rect);
+    selections.setSelection(rect);
   }
 
   function onMouseDrag(event) {
@@ -49,4 +50,4 @@
     onMouseDown,
     onMouseDrag,
   });
-})(canvas, drawingProperties, tools);
+})(canvas, drawingProperties, selections, tools);

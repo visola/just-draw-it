@@ -1,4 +1,4 @@
-(function (canvas, drawingProperties, tools) {
+(function (canvas, drawingProperties, selections, tools) {
   let ellipse;
   let initialX, initialY;
 
@@ -17,9 +17,10 @@
 
     ellipse.setAttribute('fill', drawingProperties.fillColor);
     ellipse.setAttribute('stroke', drawingProperties.strokeColor);
-    ellipse.setAttribute('strokeWidth', 1);
+    ellipse.setAttribute('stroke-width', 1);
 
     canvas.addElement(ellipse);
+    selections.setSelection(ellipse);
   }
 
   function onMouseDrag(event) {
@@ -41,4 +42,4 @@
     onMouseDown,
     onMouseDrag,
   });
-})(canvas, drawingProperties, tools);
+})(canvas, drawingProperties, selections, tools);
