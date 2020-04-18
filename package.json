@@ -5,25 +5,20 @@
   "license": "MIT",
   "name": "just-draw-it",
   "version": "1.0.0",
-
   "bugs": {
     "url": "https://github.com/visola/just-draw-it/issues"
   },
-
   "keywords": [
     "svg",
     "vanillajs"
   ],
-
   "repository": {
     "type": "git",
     "url": "git+https://github.com/visola/just-draw-it.git"
   },
-
   "scripts": {
-    "build": "eslint **/*.js"
+    "lint": "eslint **/*.js"
   },
-
   "devDependencies": {
     "eslint": "^6.8.0",
     "eslint-config-google": "^0.14.0"
