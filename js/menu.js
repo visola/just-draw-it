@@ -1,7 +1,12 @@
-(function(actions) {
+(function(tools) {
   const menuContainer = document.getElementById('menu');
 
   const menuItems = [
+    {
+      action: 'selectTransform',
+      icon: 'icons/menu/select.svg',
+      label: 'Selection',
+    },
     {
       action: 'rectangle',
       icon: 'icons/menu/rectangle.svg',
@@ -20,7 +25,8 @@
     const menuItemEl = document.createElement('a');
     menuItem.element = menuItemEl;
     menuItemEl.className = 'item';
-    menuItemEl.innerHTML = `<img class="icon" src="${menuItem.icon}" />${menuItem.label}`;
+    menuItemEl.innerHTML = `<img class="icon" src="${menuItem.icon}" />`;
+    menuItemEl.setAttribute('title', menuItem.label);
     menuItemEl.addEventListener('click', () => setActiveMenu(menuItem));
 
     menuContainer.appendChild(menuItemEl);
@@ -37,9 +43,9 @@
 
     activeAction = menuItem;
     menuItem.element.classList.add('active');
-    actions.activate(menuItem.action);
+    tools.activate(menuItem.action);
   }
 
   menuItems.forEach(createMenuElement);
   setActiveMenu(menuItems[0]);
-})(actions);
+})(tools);
