@@ -46,8 +46,13 @@
     }
   }
 
+  function onMouseUp() {
+    tools.activate('selectTransform');
+  }
+
   tools.register('rectangle', {
     onMouseDown,
     onMouseDrag,
+    onMouseUp,
   });
 })(canvas, drawingProperties, selections, tools);

@@ -38,8 +38,13 @@
     ellipse.setAttribute('rx', newWidth);
   }
 
+  function onMouseUp() {
+    tools.activate('selectTransform');
+  }
+
   tools.register('ellipse', {
     onMouseDown,
     onMouseDrag,
+    onMouseUp,
   });
 })(canvas, drawingProperties, selections, tools);
