@@ -1,5 +1,5 @@
-/* exported moveTool */
-const moveTool = (function () {
+/* exported translateTool */
+const translateTool = (function () {
   function fetchPositions(elements) {
     return elements.map((el) => {
       switch (el.nodeName) {

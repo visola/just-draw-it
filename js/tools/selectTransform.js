@@ -1,4 +1,4 @@
-(function (canvas, moveTool, selections, tools) {
+(function (canvas, selections, tools, translateTool) {
   let draggingSelection = false;
   let initialClientX, initialClientY;
   let recordedInitialPositions;
@@ -19,7 +19,7 @@
       console.log('Mouse down at control point', controlUnderMouse);
     } else if (selections.isSelected(...elementsUnderMouse)) {
       draggingSelection = true;
-      recordedInitialPositions = moveTool.fetchPositions(selections.selections);
+      recordedInitialPositions = translateTool.fetchPositions(selections.selections);
     } else {
       if (elementsUnderMouse.length == 0) {
         selections.clearSelection();
@@ -31,14 +31,14 @@
       } else {
         selections.setSelection(elementsUnderMouse[0]);
       }
-      recordedInitialPositions = moveTool.fetchPositions(selections.selections);
+      recordedInitialPositions = translateTool.fetchPositions(selections.selections);
       draggingSelection = true;
     }
   }
 
   function onMouseDrag(event) {
     if (draggingSelection) {
-      moveTool.move(selections.selections, recordedInitialPositions, event.clientX - initialClientX, event.clientY - initialClientY);
+      translateTool.move(selections.selections, recordedInitialPositions, event.clientX - initialClientX, event.clientY - initialClientY);
     }
   }
 
@@ -46,4 +46,4 @@
     onMouseDown,
     onMouseDrag,
   });
-})(canvas, moveTool, selections, tools);
+})(canvas, selections, tools, translateTool);
