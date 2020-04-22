@@ -1,5 +1,6 @@
 /* exported tools */
 const tools = (function(canvas) {
+  const listeners = [];
   const toolsByName = {};
   const canvasEl = canvas.element;
 
@@ -39,13 +40,21 @@ const tools = (function(canvas) {
   canvasEl.addEventListener('mouseup', mouseUpHandler);
 
   return {
-    activate(tool) {
-      if (!toolsByName[tool]) {
-        throw new Error(`No tool with name: "${tool}"`);
+    activate(toolName) {
+      if (!toolsByName[toolName]) {
+        throw new Error(`No tool with name: "${toolName}"`);
+      }
+
+      const newTool = toolsByName[toolName];
+      if (newTool == activeTool) {
+        return;
       }
 
       const previousActive = activeTool;
-      activeTool = toolsByName[tool];
+      activeTool = newTool
+      listeners.forEach((l) => {
+        l(toolName);
+      });
       if (activeTool.activate) {
         activeTool.activate(previousActive);
       }
@@ -54,5 +63,9 @@ const tools = (function(canvas) {
     register(name, tool) {
       toolsByName[name] = tool;
     },
+
+    registerListener(l) {
+      listeners.push(l);
+    }
   };
 })(canvas);

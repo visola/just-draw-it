@@ -33,19 +33,23 @@
   }
 
   function setActiveMenu(menuItem) {
-    if (activeAction && menuItem.action == activeAction.action) {
-      return;
-    }
+    tools.activate(menuItem.action);
+  }
 
+  function toolUpdated(newToolName) {
+    updateMenu(menuItems.find((m) => m.action == newToolName));
+  }
+
+  function updateMenu(menuItem) {
     if (activeAction && activeAction.element) {
       activeAction.element.classList.remove('active');
     }
 
     activeAction = menuItem;
     menuItem.element.classList.add('active');
-    tools.activate(menuItem.action);
   }
 
   menuItems.forEach(createMenuElement);
   setActiveMenu(menuItems[0]);
+  tools.registerListener(toolUpdated);
 })(tools);
