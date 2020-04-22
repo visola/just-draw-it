@@ -15,9 +15,6 @@ const canvas = (function() {
       if (element == currentEl) {
         break; // Stop when SVG element is found
       }
-      if (currentEl.dataset.control != null) {
-        continue; // Ignore control objects
-      }
       result.push(currentEl);
     }
     return result;
