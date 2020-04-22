@@ -51,7 +51,7 @@ const tools = (function(canvas) {
       }
 
       const previousActive = activeTool;
-      activeTool = newTool
+      activeTool = newTool;
       listeners.forEach((l) => {
         l(toolName);
       });
@@ -66,6 +66,6 @@ const tools = (function(canvas) {
 
     registerListener(l) {
       listeners.push(l);
-    }
+    },
   };
 })(canvas);
