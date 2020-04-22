@@ -1,4 +1,4 @@
-(function (actions, canvas) {
+(function (canvas, drawingProperties, selections, tools) {
   let ellipse;
   let initialX, initialY;
 
@@ -14,9 +14,13 @@
     ellipse.setAttribute('ry', '0');
     ellipse.setAttribute('cx', initialX - left);
     ellipse.setAttribute('cy', initialY - top);
-    ellipse.setAttribute('style', 'fill:black; stroke:black; stroke-width:2;');
+
+    ellipse.setAttribute('fill', drawingProperties.fillColor);
+    ellipse.setAttribute('stroke', drawingProperties.strokeColor);
+    ellipse.setAttribute('stroke-width', 1);
 
     canvas.addElement(ellipse);
+    selections.setSelection(ellipse);
   }
 
   function onMouseDrag(event) {
@@ -34,8 +38,13 @@
     ellipse.setAttribute('rx', newWidth);
   }
 
-  actions.register('ellipse', {
+  function onMouseUp() {
+    tools.activate('selectTransform');
+  }
+
+  tools.register('ellipse', {
     onMouseDown,
     onMouseDrag,
+    onMouseUp,
   });
-})(actions, canvas);
+})(canvas, drawingProperties, selections, tools);

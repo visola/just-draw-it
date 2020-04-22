@@ -1,4 +1,4 @@
-(function (actions, canvas) {
+(function (canvas, drawingProperties, selections, tools) {
   let rect;
   let initialX, initialY;
   let relativeX, relativeY;
@@ -18,9 +18,13 @@
     rect.setAttribute('width', '0');
     rect.setAttribute('x', relativeX);
     rect.setAttribute('y', relativeY);
-    rect.setAttribute('style', 'fill:black; stroke:black; stroke-width:2;');
+
+    rect.setAttribute('fill', drawingProperties.fillColor);
+    rect.setAttribute('stroke', drawingProperties.strokeColor);
+    rect.setAttribute('stroke-width', 1);
 
     canvas.addElement(rect);
+    selections.setSelection(rect);
   }
 
   function onMouseDrag(event) {
@@ -42,8 +46,13 @@
     }
   }
 
-  actions.register('rectangle', {
+  function onMouseUp() {
+    tools.activate('selectTransform');
+  }
+
+  tools.register('rectangle', {
     onMouseDown,
     onMouseDrag,
+    onMouseUp,
   });
-})(actions, canvas);
+})(canvas, drawingProperties, selections, tools);
