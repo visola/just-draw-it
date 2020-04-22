@@ -6,8 +6,26 @@ const canvas = (function() {
     element.appendChild(toAdd);
   }
 
+  function getClickable(x, y) {
+    const elements = document.elementsFromPoint(x, y);
+    const result = [];
+
+    for (let i = 0; i < elements.length; i++) {
+      const currentEl = elements[i];
+      if (element == currentEl) {
+        break; // Stop when SVG element is found
+      }
+      if (currentEl.dataset.control != null) {
+        continue; // Ignore control objects
+      }
+      result.push(currentEl);
+    }
+    return result;
+  }
+
   return {
     addElement,
     element,
+    getClickable,
   };
 })();
