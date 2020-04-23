@@ -1,27 +1,27 @@
-define(['document'], function(document) {
-  const element = document.getElementById('canvas');
+import '../document.js';
 
-  function addElement(toAdd) {
-    element.appendChild(toAdd);
-  }
+const element = document.getElementById('canvas');
 
-  function getClickable(x, y) {
-    const elements = document.elementsFromPoint(x, y);
-    const result = [];
+function addElement(toAdd) {
+  element.appendChild(toAdd);
+}
 
-    for (let i = 0; i < elements.length; i++) {
-      const currentEl = elements[i];
-      if (element == currentEl) {
-        break; // Stop when SVG element is found
-      }
-      result.push(currentEl);
+function getClickable(x, y) {
+  const elements = document.elementsFromPoint(x, y);
+  const result = [];
+
+  for (let i = 0; i < elements.length; i++) {
+    const currentEl = elements[i];
+    if (element == currentEl) {
+      break; // Stop when SVG element is found
     }
-    return result;
+    result.push(currentEl);
   }
+  return result;
+}
 
-  return {
-    addElement,
-    element,
-    getClickable,
-  };
-});
+export default {
+  addElement,
+  element,
+  getClickable,
+};

@@ -1,8 +1,7 @@
 {
     "env": {
         "amd": true,
-        "browser": true,
-        "es6": true
+        "browser": true
     },
     "extends": [
         "google"
@@ -12,7 +11,8 @@
         "SharedArrayBuffer": "readonly"
     },
     "parserOptions": {
-        "ecmaVersion": 2018
+        "ecmaVersion": 2018,
+        "sourceType": "module"
     },
     "rules": {
         "max-len": ["error", { "code": 120 } ],
