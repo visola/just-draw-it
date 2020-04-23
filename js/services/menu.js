@@ -1,24 +1,5 @@
-(function(tools) {
+define(['document', 'services/tools'], function(document, toolsService) {
   const menuContainer = document.getElementById('menu');
-
-  const menuItems = [
-    {
-      action: 'selectTransform',
-      icon: 'icons/menu/select.svg',
-      label: 'Selection',
-    },
-    {
-      action: 'rectangle',
-      icon: 'icons/menu/rectangle.svg',
-      label: 'Rectangle',
-    },
-    {
-      action: 'ellipse',
-      icon: 'icons/menu/ellipse.svg',
-      label: 'Ellipse',
-    },
-  ];
-
   let activeAction;
 
   function createMenuElement(menuItem) {
@@ -33,7 +14,7 @@
   }
 
   function setActiveMenu(menuItem) {
-    tools.activate(menuItem.action);
+    toolsService.activate(menuItem.action);
   }
 
   function toolUpdated(newToolName) {
@@ -49,7 +30,13 @@
     menuItem.element.classList.add('active');
   }
 
-  menuItems.forEach(createMenuElement);
-  setActiveMenu(menuItems[0]);
-  tools.registerListener(toolUpdated);
-})(tools);
+  toolsService.registerListener(toolUpdated);
+
+  return {
+    initialize: function(items) {
+      menuItems = items;
+      menuItems.forEach(createMenuElement);
+      setActiveMenu(menuItems[0]);
+    },
+  };
+});

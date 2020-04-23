@@ -1,5 +1,4 @@
-/* exported translateTool */
-const translateTool = (function () {
+define(function() {
   function fetchPositions(elements) {
     return elements.map((el) => {
       switch (el.nodeName) {
@@ -37,4 +36,4 @@ const translateTool = (function () {
     fetchPositions,
     move,
   };
-})();
+});

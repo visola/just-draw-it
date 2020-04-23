@@ -1,12 +1,16 @@
-(function (canvas, drawingProperties, selections, tools) {
+define([
+  'document', 'services/canvas', 'services/drawingProperties', 'services/selections',
+], function(document, canvasService, drawingPropertiesService, selectionsService) {
   let rect;
-  let initialX, initialY;
-  let relativeX, relativeY;
-
-  let boundingRect = canvas.element.getBoundingClientRect();
-  let { left, top } = boundingRect;
+  let initialX;
+  let initialY;
+  let relativeX;
+  let relativeY;
 
   function onMouseDown(event) {
+    const boundingRect = canvasService.element.getBoundingClientRect();
+    const {left, top} = boundingRect;
+
     initialX = event.clientX;
     initialY = event.clientY;
 
@@ -19,17 +23,17 @@
     rect.setAttribute('x', relativeX);
     rect.setAttribute('y', relativeY);
 
-    rect.setAttribute('fill', drawingProperties.fillColor);
-    rect.setAttribute('stroke', drawingProperties.strokeColor);
+    rect.setAttribute('fill', drawingPropertiesService.fillColor);
+    rect.setAttribute('stroke', drawingPropertiesService.strokeColor);
     rect.setAttribute('stroke-width', 1);
 
-    canvas.addElement(rect);
-    selections.setSelection(rect);
+    canvasService.addElement(rect);
+    selectionsService.setSelection(rect);
   }
 
   function onMouseDrag(event) {
-    let amountX = event.clientX - initialX;
-    let amountY = event.clientY - initialY;
+    const amountX = event.clientX - initialX;
+    const amountY = event.clientY - initialY;
 
     if (amountX < 0) {
       rect.setAttribute('x', relativeX + amountX);
@@ -46,13 +50,11 @@
     }
   }
 
-  function onMouseUp() {
-    tools.activate('selectTransform');
-  }
-
-  tools.register('rectangle', {
+  return {
+    get name() {
+      return 'rectangle';
+    },
     onMouseDown,
     onMouseDrag,
-    onMouseUp,
-  });
-})(canvas, drawingProperties, selections, tools);
+  };
+});

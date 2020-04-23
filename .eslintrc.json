@@ -1,5 +1,6 @@
 {
     "env": {
+        "amd": true,
         "browser": true,
         "es6": true
     },
@@ -15,6 +16,7 @@
     },
     "rules": {
         "max-len": ["error", { "code": 120 } ],
+        "no-restricted-globals": ["error", "document"],
         "require-jsdoc": "off"
     }
 }

@@ -1,8 +1,7 @@
-/* exported tools */
-const tools = (function(canvas) {
+define(['services/canvas'], function(canvasService) {
   const listeners = [];
   const toolsByName = {};
-  const canvasEl = canvas.element;
+  const canvasEl = canvasService.element;
 
   let activeTool;
   let mouseIsDown = false;
@@ -60,12 +59,12 @@ const tools = (function(canvas) {
       }
     },
 
-    register(name, tool) {
-      toolsByName[name] = tool;
+    register(tool) {
+      toolsByName[tool.name] = tool;
     },
 
     registerListener(l) {
       listeners.push(l);
     },
   };
-})(canvas);
+});

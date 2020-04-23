@@ -1,5 +1,4 @@
-/* exported canvas */
-const canvas = (function() {
+define(['document'], function(document) {
   const element = document.getElementById('canvas');
 
   function addElement(toAdd) {
@@ -25,4 +24,4 @@ const canvas = (function() {
     element,
     getClickable,
   };
-})();
+});

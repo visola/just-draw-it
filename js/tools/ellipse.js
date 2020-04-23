@@ -1,10 +1,13 @@
-(function (canvas, drawingProperties, selections, tools) {
+define([
+  'document', 'services/canvas', 'services/drawingProperties', 'services/selections',
+], function(document, canvasService, drawingProperties, selectionsService) {
   let ellipse;
-  let initialX, initialY;
+  let initialX;
+  let initialY;
 
   function onMouseDown(event) {
-    const boundingRect = event.target.getBoundingClientRect();
-    const { left, top } = boundingRect;
+    const boundingRect = canvasService.element.getBoundingClientRect();
+    const {left, top} = boundingRect;
 
     initialX = event.clientX;
     initialY = event.clientY;
@@ -19,8 +22,8 @@
     ellipse.setAttribute('stroke', drawingProperties.strokeColor);
     ellipse.setAttribute('stroke-width', 1);
 
-    canvas.addElement(ellipse);
-    selections.setSelection(ellipse);
+    canvasService.addElement(ellipse);
+    selectionsService.setSelection(ellipse);
   }
 
   function onMouseDrag(event) {
@@ -38,13 +41,11 @@
     ellipse.setAttribute('rx', newWidth);
   }
 
-  function onMouseUp() {
-    tools.activate('selectTransform');
-  }
-
-  tools.register('ellipse', {
+  return {
+    get name() {
+      return 'ellipse';
+    },
     onMouseDown,
     onMouseDrag,
-    onMouseUp,
-  });
-})(canvas, drawingProperties, selections, tools);
+  };
+});

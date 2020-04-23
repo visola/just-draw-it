@@ -1,13 +1,16 @@
-(function (canvas, selections, tools, translateTool) {
+define([
+  'services/canvas', 'services/selections', 'tools/translate',
+], function(canvasService, selectionsService, translateTool) {
   let draggingSelection = false;
-  let initialClientX, initialClientY;
+  let initialClientX;
+  let initialClientY;
   let recordedInitialPositions;
 
   function onMouseDown(event) {
     draggingSelection = false;
 
-    const elementsUnderMouse = canvas.getClickable(event.clientX, event.clientY)
-      .filter((el) => el.dataset.boundary == null);
+    const elementsUnderMouse = canvasService.getClickable(event.clientX, event.clientY)
+        .filter((el) => el.dataset.boundary == null);
 
     const controlUnderMouse = elementsUnderMouse.find((el) => el.dataset.control);
 
@@ -17,33 +20,41 @@
     if (controlUnderMouse) {
       // TODO - Implement transform
       console.log('Mouse down at control point', controlUnderMouse);
-    } else if (selections.isSelected(...elementsUnderMouse)) {
+    } else if (selectionsService.isSelected(...elementsUnderMouse)) {
       draggingSelection = true;
-      recordedInitialPositions = translateTool.fetchPositions(selections.selections);
+      recordedInitialPositions = translateTool.fetchPositions(selectionsService.selections);
     } else {
       if (elementsUnderMouse.length == 0) {
-        selections.clearSelection();
+        selectionsService.clearSelection();
         return;
       }
 
       if (event.getModifierState('Shift')) {
-        selections.addToSelection(elementsUnderMouse[0]);
+        selectionsService.addToSelection(elementsUnderMouse[0]);
       } else {
-        selections.setSelection(elementsUnderMouse[0]);
+        selectionsService.setSelection(elementsUnderMouse[0]);
       }
-      recordedInitialPositions = translateTool.fetchPositions(selections.selections);
+      recordedInitialPositions = translateTool.fetchPositions(selectionsService.selections);
       draggingSelection = true;
     }
   }
 
   function onMouseDrag(event) {
     if (draggingSelection) {
-      translateTool.move(selections.selections, recordedInitialPositions, event.clientX - initialClientX, event.clientY - initialClientY);
+      translateTool.move(
+          selectionsService.selections,
+          recordedInitialPositions,
+          event.clientX - initialClientX,
+          event.clientY - initialClientY,
+      );
     }
   }
 
-  tools.register('selectTransform', {
+  return {
+    get name() {
+      return 'selectTransform';
+    },
     onMouseDown,
     onMouseDrag,
-  });
-})(canvas, selections, tools, translateTool);
+  };
+});

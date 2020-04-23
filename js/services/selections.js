@@ -1,8 +1,7 @@
-/* exported selections */
-const selections = (function(canvas) {
+define(['services/canvas', 'document'], function(canvasService, document) {
   const CONTROL_POINT_SIZE = 10;
-  const canvasElement = canvas.element;
-  const {left, top} = canvas.element.getBoundingClientRect();
+  const canvasElement = canvasService.element;
+  const {left, top} = canvasService.element.getBoundingClientRect();
   let selections = [];
 
   let controlPoints = [];
@@ -150,4 +149,4 @@ const selections = (function(canvas) {
     isSelected,
     setSelection,
   };
-})(canvas);
+});

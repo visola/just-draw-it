@@ -1,5 +1,4 @@
-/* exported drawingProperties */
-const drawingProperties = (function() {
+define(function() {
   let _fillColor = 'rgb(150,150,150,0.25)';
   let _strokeColor = 'rgb(0,0,0,0.8)';
 
@@ -17,4 +16,4 @@ const drawingProperties = (function() {
       _strokeColor = newColor;
     },
   };
-})();
+});
