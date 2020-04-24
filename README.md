@@ -7,4 +7,12 @@ https://visola.github.io/just-draw-it/
 
 # Development
 
-Open `index.html` on your browser, the code in your favorite editor and type away!
+Start the HTTP server (needs Python installed):
+
+```
+$ npm run start
+```
+
+Go to: http://localhost:8000
+
+Open the code in your favorite editor and type away!
