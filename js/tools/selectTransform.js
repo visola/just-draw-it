@@ -1,6 +1,7 @@
 import canvasService from '../services/canvas.js';
 import selectionsService from '../services/selections.js';
 
+import selectTool from './select.js';
 import translateTool from './translate.js';
 
 let draggingSelection = false;
@@ -19,25 +20,11 @@ function onMouseDown(event) {
   initialClientX = event.clientX;
   initialClientY = event.clientY;
 
-  const toSelect = elementsUnderMouse[0];
-
   if (controlUnderMouse) {
     // TODO - Implement transform
     console.log('Mouse down at control point', controlUnderMouse);
-  } else if (selectionsService.isSelected(toSelect)) {
-    draggingSelection = true;
-    recordedInitialPositions = translateTool.fetchPositions(selectionsService.selections);
   } else {
-    if (elementsUnderMouse.length == 0) {
-      selectionsService.clearSelection();
-      return;
-    }
-
-    if (event.getModifierState('Shift')) {
-      selectionsService.addToSelection(toSelect);
-    } else {
-      selectionsService.setSelection(toSelect);
-    }
+    selectTool.onMouseDown(elementsUnderMouse);
     recordedInitialPositions = translateTool.fetchPositions(selectionsService.selections);
     draggingSelection = true;
   }
