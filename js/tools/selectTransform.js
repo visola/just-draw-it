@@ -19,10 +19,12 @@ function onMouseDown(event) {
   initialClientX = event.clientX;
   initialClientY = event.clientY;
 
+  const toSelect = elementsUnderMouse[0];
+
   if (controlUnderMouse) {
     // TODO - Implement transform
     console.log('Mouse down at control point', controlUnderMouse);
-  } else if (selectionsService.isSelected(...elementsUnderMouse)) {
+  } else if (selectionsService.isSelected(toSelect)) {
     draggingSelection = true;
     recordedInitialPositions = translateTool.fetchPositions(selectionsService.selections);
   } else {
@@ -32,9 +34,9 @@ function onMouseDown(event) {
     }
 
     if (event.getModifierState('Shift')) {
-      selectionsService.addToSelection(elementsUnderMouse[0]);
+      selectionsService.addToSelection(toSelect);
     } else {
-      selectionsService.setSelection(elementsUnderMouse[0]);
+      selectionsService.setSelection(toSelect);
     }
     recordedInitialPositions = translateTool.fetchPositions(selectionsService.selections);
     draggingSelection = true;
