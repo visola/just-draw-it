@@ -16,7 +16,7 @@
     },
     "rules": {
         "max-len": ["error", { "code": 120 } ],
-        "no-restricted-globals": ["error", "document"],
+        "no-restricted-globals": ["error", { "name": "document", "message": "Import the exported document."}],
         "require-jsdoc": "off"
     }
 }
