@@ -24,7 +24,7 @@ function onMouseDown(event) {
     // TODO - Implement transform
     console.log('Mouse down at control point', controlUnderMouse);
   } else {
-    selectTool.onMouseDown(elementsUnderMouse);
+    selectTool.onMouseDown(event, elementsUnderMouse);
     recordedInitialPositions = translateTool.fetchPositions(selectionsService.selections);
     draggingSelection = true;
   }

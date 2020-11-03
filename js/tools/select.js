@@ -1,6 +1,6 @@
 import selectionsService from '../services/selections.js';
 
-function onMouseDown(elementsUnderMouse) {
+function onMouseDown(event, elementsUnderMouse) {
   const toSelect = elementsUnderMouse[0];
 
   if (selectionsService.isSelected(toSelect)) {
