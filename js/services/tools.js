@@ -34,7 +34,7 @@ function mouseDownHandler(event) {
   }
 }
 
-function mouseMoveHandler() {
+function mouseMoveHandler(event) {
   if (mouseIsDown) {
     if (activeTool && activeTool.onMouseDrag) {
       activeTool.onMouseDrag(event);
